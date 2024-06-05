@@ -1,8 +1,8 @@
-PWD /home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática
+PWD /home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/models
 INPUT /usr/local/texlive/2023/texmf.cnf
 INPUT /usr/local/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/main.tex
+INPUT /home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/models/main.tex
 OUTPUT output/main.log
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/base/article.cls
