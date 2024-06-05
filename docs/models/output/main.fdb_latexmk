@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1717626624.9627 "/home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/docs/models/main.tex" "output/main.pdf" "main" 1717626625.8886 0
-  "/home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/docs/models/main.tex" 1717626624.68085 6643 71cfce89eae7e64c00f11e0a59741844 ""
+["pdflatex"] 1717627922.0637 "/home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/docs/models/main.tex" "output/main.pdf" "main" 1717627923.28323 0
+  "/home/andel/Documentos/Mestrado/Disciplinas/Tópicos em Controle e Automação Industrial/Modelagem Matemática/docs/models/main.tex" 1717627921.7944 8206 8fa6f82cc6158f7feda387f8311e9715 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -48,6 +48,7 @@
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1248133631 31809 8670ca339bf94e56da1fc21c80635e2a ""
+  "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
@@ -189,8 +190,8 @@
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1704737146 8218538 14cfa3e52bde86dad976561f4ec3ef33 ""
   "/usr/local/texlive/2023/texmf.cnf" 1704737045.94403 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
   "assets/dc_microgrid.eps" 1717615747.1764 72764 1106fb9e919e2f444016ad30a8a02db4 ""
-  "main.tex" 1717626624.68085 6643 71cfce89eae7e64c00f11e0a59741844 ""
-  "output/main.aux" 1717626625.81684 300 72314a62794c114342c5bd3c989d6073 "pdflatex"
+  "main.tex" 1717627921.7944 8206 8fa6f82cc6158f7feda387f8311e9715 ""
+  "output/main.aux" 1717627923.2184 300 9f1f19ff09e54132ebc63ef8daceae1a "pdflatex"
   (generated)
   "output/main.aux"
   "output/main.log"

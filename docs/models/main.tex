@@ -35,7 +35,7 @@
 
 \maketitle
 
-\subsection*{Esquemático da Microrrede}
+\section*{Esquemático da Microrrede}
 
 \begin{figure}[h]
   \centering
@@ -44,7 +44,7 @@
   \label{fig:exemplo}
 \end{figure}
 
-\subsubsection*{Modelagem do Subsistema: Geração CC}
+\subsection*{Modelagem do Subsistema: Geração CC}
 
 O circuito da geração CC está representado abaixo:
 
@@ -96,7 +96,7 @@ Portanto, o modelo do subsistema da bateria é:
 \end{gather}
 
 \vspace*{8pt}
-\subsection*{Modelagem do Sistema: Bateria}
+\subsection*{Modelagem do Subsistema: Bateria}
 
 O circuito que representa o subsistema da bateria está apresentado abaixo:
 
@@ -188,6 +188,48 @@ Portanto, o modelo dinâmico do subsistema da bateria é:
   \begin{cases}
     \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t) \\[8pt]
     \dot{v}_{C_B} = \displaystyle \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+  \end{cases}
+\end{gather}
+
+\vspace*{8pt}
+\subsection*{Modelagem do Subsistema: Cargas}
+
+O circuito que representa as duas cargas conectadas a redes, a CPL e a CRL, é:
+
+\begin{figure}[H]
+  \centering
+  \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
+    \ctikzset{bipoles/length=1cm}
+    \draw
+    (0,4) to[open, v_=$v_E(t)$, o-o] (0,0)
+    (0,4) to[L,l=$L_{K}$, i_=$i_{L_K}(t)$] (4,4)
+    (3,4) to[R,l=$R_{K}$] (7,4)
+    (7,4) to[C, l=$C_{K}$, v=$v_{C_K}(t)$] (7,0)
+    (11,4) to[controlled current source, l={$i(t) = \frac{P_{cpl}(t)}{v_{C_K}(t)}$}] (11,0)
+    (0,0) to[short] (16,0)
+    (7,4) to[short] (16,4)
+    (16,4) to[R, l=$R_{rcl}$] (16,0)
+    ;
+  \end{circuitikz}
+\end{figure}
+
+Aplicando a LKT na malha mais a esquerda, têm-se:
+\begin{gather}
+  v_E(t) - L_K \dot{i}_{L_K} - R_K i_{L_K}(t) - v_{C_K}(t) = 0 \nle
+  \dot{i}_{L_K} = - \frac{R_K}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{1}{L_K} v_E(t)
+\end{gather}
+
+Aplicando a LKC, obtemos:
+\begin{gather}
+  i_{L_K} = C_K \dot{v}_{C_K} + \frac{P_{cpl}(t)}{v_{C_K}(t)} + \frac{v_{C_K}(t)}{R_{crl}} \nle
+  \dot{v}_{C_K} = \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
+\end{gather}
+
+Portanto, o modelo dinâmico do subsistema das cargas é:
+\begin{gather}
+  \begin{cases}
+    \dot{i}_{L_K} = \displaystyle - \frac{R_K}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{1}{L_K} v_E(t) \\[8pt]
+    \dot{v}_{C_K} = \displaystyle \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
   \end{cases}
 \end{gather}
 
