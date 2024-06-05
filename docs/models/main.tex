@@ -53,18 +53,18 @@ O circuito da geração CC está representado abaixo:
   \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
     \ctikzset{bipoles/length=1cm}
     \draw
-      (0,4) to[vsource, v_=$v_G(t)$] (0,0)
-      (0,4) to[normal open switch, l=$S_G$] (4,4)
-      (4,0) to[diode, l=$D_G$] (4,4)
-      (4,4) to[L, l=$L_G$, i_=$i_{L_G}(t)$] (8,4)
-      (7,4) to[R, l=$R_{G_1}$] (11,4)
-      (11,4) to[C, l=$C_G$, v=$v_{C_G}(t)$] (11,0)
-      (11,4) to[R, l=$R_{G_2}$, i_=$i_{G}(t)$] (15,4)
+    (0,4) to[vsource, v_=$v_G(t)$] (0,0)
+    (0,4) to[normal open switch, l=$S_G$] (4,4)
+    (4,0) to[diode, l=$D_G$] (4,4)
+    (4,4) to[L, l=$L_G$, i_=$i_{L_G}(t)$] (8,4)
+    (7,4) to[R, l=$R_{G_1}$] (11,4)
+    (11,4) to[C, l=$C_G$, v=$v_{C_G}(t)$] (11,0)
+    (11,4) to[R, l=$R_{G_2}$, i_=$i_{G}(t)$] (15,4)
 
-      (15,4) to[short, -o] (16,4)
-      (0,0) to[short, -o] (16,0)
+    (15,4) to[short, -o] (16,4)
+    (0,0) to[short, -o] (16,0)
 
-      (16,4) to[open, v=$v_E(t)$] (16,0)
+    (16,4) to[open, v=$v_E(t)$] (16,0)
     ;
   \end{circuitikz}
 \end{figure}
@@ -88,11 +88,106 @@ Têm-se que, $i_G(t) = \frac{v_{C_G}(t) - v_E(t)}{R_{G_2}}$. Logo,
 \end{gather}
 
 Portanto, o modelo do subsistema da bateria é:
-
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_G} = \displaystyle - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t) \\[12pt]
+    \dot{i}_{L_G} = \displaystyle - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t) \\[8pt]
     \dot{v}_{C_G} = \displaystyle \frac{1}{C_G} i_{L_G}(t) - \frac{1}{R_{G_2}C_G }v_{C_G}(t) + \frac{1}{R_{G_2} C_G} v_E(t)
+  \end{cases}
+\end{gather}
+
+\vspace*{8pt}
+\subsection*{Modelagem do Sistema: Bateria}
+
+O circuito que representa o subsistema da bateria está apresentado abaixo:
+
+\begin{figure}[H]
+  \centering
+  \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
+    \ctikzset{bipoles/length=1cm}
+    \draw
+    (0,4) to[battery, v_=$v_B(t)$] (0,0)
+    (0,4) to[L,l=$L_{B}$, i_=$i_{L_B}(t)$] (4,4)
+    (3,4) to[R,l=$R_{B_1}$] (7,4)
+    (7,0) to[normal closed switch, l=$S_{B_1}$] (7,4)
+    (7,4) to[normal open switch, l=$S_{B_2}$] (11,4)
+    (11,4) to[C, l=$C_{B}$, v=$v_{C_B}(t)$] (11,0)
+    (11,4) to[R,l=$R_{B_2}$, i=$i_B(t)$, -o] (15,4)
+    (0,0) to[short, -o] (15,0)
+    (15,4) to[open, v=$v_E(t)$] (15,0)
+    ;
+  \end{circuitikz}
+\end{figure}
+
+\subsubsection*{Para $S_{B_1}$ fechada e $S_{B_2}$ aberta: $d_B(t) \cdot T_se$}
+
+Aplicando a LKT na malha mais a esquerda, obtemos:
+\begin{gather}
+  v_B(t) - L_B \dot{i}_{L_B} - R_{B_1} i_{L_B} (t) = 0 \nle
+  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t)
+\end{gather}
+
+Aplicando a LKC na malha mais a direita, tém-se:
+\begin{gather}
+  i_B(t) + C_B \dot{v}_{C_B}(t) = 0
+\end{gather}
+
+Como $i_B(t) = \frac{v_{C_B}(t) - v_E(t)}{R_{B_2}}$, têm-se:
+\begin{gather}
+  \frac{v_{C_B}(t)}{R_{B_2}} - \frac{v_E(t)}{R_{B_2}} + C_B \dot{v}_{C_B}(t) = 0 \nle
+  \dot{v}_{C_B}(t) = - \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)
+\end{gather}
+
+Assim, neste modo, têm-se:
+\begin{gather}
+  \begin{cases}
+    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t) \\[8pt]
+    \dot{v}_{C_B}(t) = \displaystyle - \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)
+  \end{cases}
+\end{gather}
+
+\vspace*{8pt}
+\subsubsection*{Para $S_{B_1}$ aberta e $S_{B_2}$ fechada: $\left[1 - d_B(t)\right] \cdot T_s$}
+
+Aplicando a LKT, obtemos:
+\begin{gather}
+  v_B(t) - L_B \dot{i}_{L_B} - R_{B_1} i_{L_B} (t) - v_{C_B} (t)= 0 \nle
+  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t)
+\end{gather}
+
+Aplicando a LKC, obtemos:
+\begin{gather}
+  i_{L_B}(t) = C_B v_{C_B}(t) + i_B(t) \nle
+  i_{L_B}(t) = C_B \dot{v}_{C_B}(t) +  \frac{v_{C_B}(t)}{R_{B_2}} - \frac{v_E(t)}{R_{B_2}} \nle
+  \dot{v}_{C_B}(t) =  \frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+\end{gather}
+
+Assim, neste modo, têm-se:
+\begin{gather}
+  \begin{cases}
+    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t) \\[8pt]
+    \dot{v}_{C_B} = \displaystyle \frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+  \end{cases}
+\end{gather}
+
+\vspace*{8pt}
+\subsubsection*{Modelo Médio Completo}
+A equação completa da dinâmica da corrente ${i}_{L_B}(t)$ é: 
+\begin{gather}
+  \dot{i}_{L_B} = \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t)\right] d_B(t) + \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t)\right] \left[1 - d_B(t)\right] \nle
+  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t)
+\end{gather}
+
+E da tensão, 
+\begin{gather}
+  \dot{v}_{C_B}(t) = \left[- \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)\right] d_B(t) + \left[\frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)\right] \left[1 - d_B(t)\right] \nle
+  \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+\end{gather}
+
+Portanto, o modelo dinâmico do subsistema da bateria é:
+\begin{gather}
+  \begin{cases}
+    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t) \\[8pt]
+    \dot{v}_{C_B} = \displaystyle \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
   \end{cases}
 \end{gather}
 
