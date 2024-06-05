@@ -1,0 +1,58 @@
+\documentclass{article} 
+
+\usepackage[brazil]{babel}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{bm}
+\usepackage{float}
+\usepackage[margin=2cm]{geometry}
+\usepackage{circuitikz}
+\usepackage{siunitx}
+\usepackage{steinmetz}
+\usepackage{amssymb}
+
+\newcommand{\phasor}[2]{%
+  #1 \, \phase{\, #2^\circ} \,
+}
+
+% \newcommand{\phasor}[2]{%
+%   #1 \, \text{\phase{\, \ang{#2}}} \,
+% }
+
+\newcommand{\nle}{%
+  \notag \\[4pt]
+}
+
+\setlength{\parindent}{0pt}
+
+\title{Modelagem Matemática da Microrrede CC} 
+\author{} 
+% \date{\today}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Esquemático da Microrrede}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{assets/dc_microgrid.eps}
+  \caption{Legenda da imagem}
+  \label{fig:exemplo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
+    \ctikzset{bipoles/length=1cm}
+    \draw
+    
+    ;
+  \end{circuitikz}
+\end{figure}
+
+
+\end{document}
