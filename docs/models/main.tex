@@ -16,6 +16,8 @@
   #1 \, \phase{\, #2^\circ} \,
 }
 
+\newcommand{\ds}{\displaystyle}
+
 % \newcommand{\phasor}[2]{%
 %   #1 \, \text{\phase{\, \ang{#2}}} \,
 % }
@@ -87,7 +89,7 @@ Têm-se que, $i_G(t) = \frac{v_{C_G}(t) - v_E(t)}{R_{G_2}}$. Logo,
   \dot{v}_{C_G} = \frac{1}{C_G} i_{L_G}(t) - \frac{1}{R_{G_2}C_G }v_{C_G}(t) + \frac{1}{R_{G_2} C_G} v_E(t)
 \end{gather}
 
-Portanto, o modelo do subsistema da bateria é:
+Portanto, o modelo do subsistema da geração é:
 \begin{gather}
   \begin{cases}
     \dot{i}_{L_G} = \displaystyle - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t) \\[8pt]
@@ -171,13 +173,13 @@ Assim, neste modo, têm-se:
 
 \vspace*{8pt}
 \subsubsection*{Modelo Médio Completo}
-A equação completa da dinâmica da corrente ${i}_{L_B}(t)$ é: 
+A equação completa da dinâmica da corrente ${i}_{L_B}(t)$ é:
 \begin{gather}
   \dot{i}_{L_B} = \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t)\right] d_B(t) + \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t)\right] \left[1 - d_B(t)\right] \nle
   \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t)
 \end{gather}
 
-E da tensão, 
+E da tensão,
 \begin{gather}
   \dot{v}_{C_B}(t) = \left[- \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)\right] d_B(t) + \left[\frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)\right] \left[1 - d_B(t)\right] \nle
   \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
@@ -232,5 +234,83 @@ Portanto, o modelo dinâmico do subsistema das cargas é:
     \dot{v}_{C_K} = \displaystyle \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
   \end{cases}
 \end{gather}
+
+\subsection*{Centralização dos Modelos}
+
+Do esquemático, têm-se que:
+\begin{gather}
+  i_G(t) + i_B(t) = i_{L_K}(t) \nle
+  \frac{1}{R_{G_2}} v_{C_G}(t) - \frac{1}{R_{G_2}} v_E(t) +
+  \frac{1}{R_{B_2}} v_{C_B}(t) - \frac{1}{R_{B_2}} v_E(t) =  i_{L_K}(t) \nle
+  i_G(t) + i_B(t) = i_{L_K}(t) \nle
+  \frac{1}{R_{G_2}} v_{C_G}(t) + \frac{1}{R_{B_2}} v_{C_B}(t)
+  - \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right] v_E(t) =  i_{L_K}(t) \nle
+  v_E(t) = - \frac{1}{\displaystyle \frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}} i_{L_K}(t) + \frac{1}{R_{G_2} \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right]} v_{C_G}(t) + \frac{1}{R_{B_2} \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right]} v_{C_B}(t) \nle
+  v_E(t) = - \frac{R_{G_2}R_{B_2}}{R_{G_2} + R_{B_2}} i_{L_K}(t) + \frac{R_{G_2}R_{B_2}}{R_{G_2} \left(R_{G_2} + R_{B_2}\right)} v_{C_G}(t) + \frac{R_{G_2}R_{B_2}}{R_{B_2} \left(R_{G_2} + R_{B_2}\right)}  v_{C_B}(t) \nle
+  v_E(t) = - \frac{R_{G_2}R_{B_2}}{R_{G_2} + R_{B_2}} i_{L_K}(t) + \frac{R_{B_2}}{R_{G_2} + R_{B_2}} v_{C_G}(t) + \frac{R_{G_2}}{R_{G_2} + R_{B_2}}  v_{C_B}(t) \nle
+  v_E(t) = - R_{G_2} R_{E_1} i_{L_K}(t) + R_{E_1} v_{C_G}(t) + R_{E_2} v_{C_B}(t)
+\end{gather}
+
+onde, $R_{E_1} = \displaystyle \frac{R_{B_2}}{R_{G_2} + R_{B_2}}$ e $R_{E_2} = \displaystyle \frac{R_{G_2}}{R_{G_2} + R_{B_2}}.$
+\vspace*{2pt}
+Assim, o modelo centralizado é:
+
+\begin{gather}
+  \begin{cases}
+    \dot{i}_{L_G} = \ds - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t)                                                                                                \\[12pt]
+    \dot{i}_{L_B} = \ds - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t)                                                                            \\[12pt]
+    \dot{i}_{L_K} = \ds - \frac{R_K + R_{G_2} R_{E_1}}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t)  + \frac{R_{E_1}}{L_K} v_{C_G}(t) + \frac{R_{E_2}}{L_K} v_{C_B}(t)                                           \\[12pt]
+    \dot{v}_{C_G} = \ds \frac{1}{C_G} i_{L_G}(t) - \frac{1 - R_{E_1}}{C_G R_{G_2}} v_{C_G}(t) - \frac{R_{E_1}}{C_G} i_{L_K}(t) + \frac{R_{E_2}}{R_{G_2} C_G} v_{C_B}(t)                                        \\[12pt]
+    \dot{v}_{C_B} = \ds \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1 - R_{E_2}}{R_{B_2}C_B} v_{C_B}(t) - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} i_{L_K}(t) + \frac{R_{E_1}}{R_{B_2} C_B} v_{C_G}(t) \\[12pt]
+    \dot{v}_{C_K} = \ds \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
+  \end{cases}
+\end{gather}
+
+No espaço de estados, temos:
+\begin{gather}
+  \begin{bmatrix}
+    \dot{i}_{L_G} \\[12pt] \dot{i}_{L_B} \\[12pt] \dot{i}_{L_K} \\[12pt]
+    \dot{v}_{C_G} \\[12pt] \dot{v}_{C_B} \\[12pt] \dot{v}_{C_K}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    \ds - \frac{R_{G_1}}{L_G} & 0                         & 0                                         & \ds - \frac{1}{L_G}                  & 0                                    & 0                           \\[12pt]
+    0                         & \ds - \frac{R_{B_1}}{L_B} & 0                                         & 0                                    & \ds - \frac{1}{L_B}                  & 0                           \\[12pt]
+    0                         & 0                         & - \ds \frac{R_K + R_{G_2} R_{E_1}}{L_K}   & \ds \frac{R_{E_1}}{L_K}              & \ds \frac{R_{E_2}}{L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
+    \ds \frac{1}{C_G}         & 0                         & \ds - \frac{R_{E_1}}{C_G}                 & \ds - \frac{1 - R_{E_1}}{R_{G_2}C_G} & \ds \frac{R_{E_2}}{R_{G_2}C_G}       & 0                           \\[12pt]
+    0                         & \ds \frac{1}{C_B}         & \ds - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} & \ds \frac{R_{E_1}}{R_{B_2} C_B}      & \ds - \frac{1 - R_{E_2}}{R_{B_2}C_B} & 0                           \\[12pt]
+    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & \ds - \frac{1}{R_{crl} C_K}
+  \end{bmatrix}
+  \begin{bmatrix}
+    i_{L_G}(t) \\[12pt] i_{L_B}(t) \\[12pt] i_{L_K}(t) \\[12pt]
+    v_{C_G}(t) \\[12pt] v_{C_B}(t) \\[12pt] v_{C_K}(t)
+  \end{bmatrix} \notag \\[12pt] +
+  \begin{bmatrix}
+    \ds \frac{v_G(t)}{L_G} & 0                 & 0                            & 0                              \\[12pt]
+    0                      & \ds \frac{1}{L_B} & \ds - \frac{v_B(t)}{L_B}     & 0                              \\[12pt]
+    0                      & 0                 & 0                            & 0                              \\[12pt]
+    0                      & 0                 & 0                            & 0                              \\[12pt]
+    0                      & 0                 & - \ds \frac{i_{L_B}(t)}{C_B} & 0                              \\[12pt]
+    0                      & 0                 & 0                            & - \ds \frac{1}{C_K v_{C_K}(t)} \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    d_G(t) \\ v_B(t) \\ d_B(t) \\ P_{cpl}(t)
+  \end{bmatrix}
+\end{gather}
+
+\begin{equation}
+  v_E(t) = 
+  \begin{bmatrix}
+    0 & 0 & 0 & 0 & 0 & 0 \\[12pt]
+    0 & 0 & 0 & 0 & 0 & 0 \\[12pt]
+    0 & 0 & - R_{G_2} R_{E_1} & 0 & 0 & 0 \\[12pt]
+    0 & 0 & 0 & R_{E_1} & 0 & 0 \\[12pt]
+    0 & 0 & 0 & 0 &  R_{E_2} & 0 \\[12pt]
+    0 & 0 & 0 & 0 & 0 & 0 \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    i_{L_G}(t) \\[12pt] i_{L_B}(t) \\[12pt] i_{L_K}(t) \\[12pt]
+    v_{C_G}(t) \\[12pt] v_{C_B}(t) \\[12pt] v_{C_K}(t)
+  \end{bmatrix}
+\end{equation}
 
 \end{document}
