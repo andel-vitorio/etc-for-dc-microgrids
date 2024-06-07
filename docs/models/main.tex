@@ -489,6 +489,26 @@ A saída transladada é:
 
 \textbf{\textit{Modelo dinâmico transladado}} \vspace*{12pt}
 
+Os pontos de operação são:
+
+\begin{gather}
+  d_G^o = \frac{R_{G_1}}{v_G(t)} i_{L_G}^o + \frac{1}{v_G(t)} v_{C_G}^o \nle
+  d_B^o = -\frac{R_{B_1}}{v_B^o} i_{L_B}^o - \frac{1}{v_B^o} v_{C_B}^o + 1 \nle
+  i_{L_K}^o = - \frac{1}{R_K + R_{G_2} R_{E_1}} v_{C_K}^o  + \frac{R_{E_1}}{R_K + R_{G_2} R_{E_1}} v_{C_G}^o + \frac{R_{E_2}}{R_K + R_{G_2} R_{E_1}} v_{C_B}^o \nle
+  i_{L_G}^o = \frac{1 - R_{E_1}}{R_{G_2}} v_{C_G}^o + R_{E_1} i_{L_K}^o - \frac{R_{E_2}}{R_{G_2}} v_{C_B}^o \nle
+  i_{L_B}^o = \frac{1 - R_{E_2}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_G}^o \nle
+  i_{L_K}^o = \frac{1}{R_{crl}} v_{C_K}^o + \frac{P_{cpl}^o}{v_{C_K}^o}
+\end{gather}
+
+Têm-se:
+\begin{gather}
+  d_B^o = -\frac{R_{B_1}}{v_B^o} i_{L_B}^o - \frac{1}{v_B^o} v_{C_B}^o + 1 \nle
+  d_B^o \left[1 - d_B^o\right]= -\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] + \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right]\nle
+  d_B^o - {d_B^o}^2 = -\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] + \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right]\nle
+  {d_B^o}^2 = \frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] - \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right] + d_B^o\nle
+  {d_B^o}^2 - \left\{- \frac{1}{v_B^o} v_{C_B}^o + 2 \right\} d_B^o - \left\{\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right]\right\} = 0
+\end{gather}
+
 O modelo dinâmico transladado é:
 
 \begin{gather}
