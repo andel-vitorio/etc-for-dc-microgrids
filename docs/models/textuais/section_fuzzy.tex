@@ -1,0 +1,292 @@
+\section*{Modelo Fuzzy da Microrrede}
+
+O modelo dinâmico transladado pode ser descrito como:
+
+\begin{gather*}
+    \dot{x}(t) = A \cdot x(t) + B \cdot u(t) + F \cdot \omega(t)
+\end{gather*}
+
+ou,
+
+\begin{gather}
+  \begin{bmatrix}
+    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
+    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
+    0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
+    0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
+    \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
+    0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
+    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
+    \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
+  \end{bmatrix} \notag \\[12pt] +
+  \begin{bmatrix}
+    \ds \frac{v_{in,1}(t)}{L_1} & 0                 & 0                                                        \\[12pt]
+    0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + \delta v_{C,2}(t) \right]     & 0                              
+                                    \\[12pt]
+    0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
+    0                      & 0                 & - \ds \frac{R_{EQ}}{R_{1,2}C_1}                    \\[12pt]
+    0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + \delta i_{L,2}(t) \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
+    0                      & 0                 & 0 
+                                    \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta d_1(t) \\ \delta d_2(t) \\ \delta i_{B}(t)
+  \end{bmatrix} +
+  \begin{bmatrix}
+      0                   & 0
+                            \\[12pt]
+      \ds \frac{1}{L_2}   & 0 
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
+                            \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta v_{in,2}(t) \\ \delta P_{cpl}(t)
+  \end{bmatrix}
+\end{gather}
+
+Em que:
+
+\begin{equation}
+    a_{66} = \ds \frac{P_{cpl}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} - \frac{1}{R_{crl} C_K}
+\end{equation} 
+
+
+As não linearidades são definidas como:
+
+\begin{gather*}
+    z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
+\end{gather*}
+\begin{gather*}
+    z_2(t) = v_{in,1}(t)
+\end{gather*}
+\begin{gather*}
+    z_3(t) = \delta v_{C,2}(t)
+\end{gather*}
+\begin{gather}
+    z_4(t) = \delta i_{L,2}(t)
+\end{gather}
+
+\subsection*{Definição das funções de pertinência}
+
+Termo não linear $z_1(t)$:
+\begin{gather*}
+    \max_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_1 \quad ; \quad \min \delta v_{C_K}(t)
+\end{gather*}
+
+\begin{gather}
+    \min_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_2 \quad ; \quad \max \delta v_{C_K}(t)
+\end{gather}
+
+$z_1(t)$ pode ser definido:
+
+\begin{gather*}
+    z_1(t) = \sum\limits_{i=1}^{2} E_i(z_1(t))q_i
+\end{gather*}
+
+\begin{gather}\label{eq:z1_definition_by_membership_functions}
+    E_1(z_1(t))q_1 + E_2(z_1(t))q_2 = z_1(t)
+\end{gather}
+
+O somatório das funções de pertinência devem ser iguais a 1, então:
+
+\begin{gather}\label{eq:z1_membership_functions_sum}
+    E_1(z_1(t)) + E_2(z_1(t)) = 1
+\end{gather}
+
+Usando as equações~\ref{eq:z1_definition_by_membership_functions} e~\ref{eq:z1_membership_functions_sum}:
+
+\begin{gather*}
+    E_1(z_1(t))q_1 = z_1(t) - E_2(z_1(t))q_2
+\end{gather*}
+\begin{gather*}
+    E_1(z_1(t)) = \frac{z_1(t) - E_2(z_1(t))q_2}{q_1}
+\end{gather*}
+\begin{gather*}
+    E_2(z_1(t)) + \frac{z_1(t) - E_2(z_1(t))q_2}{q_1} = 1
+\end{gather*}
+\begin{gather*}
+    E_2(z_1(t))\left(q_1 - q_2 \right) = q_1 - z_1(t)
+\end{gather*}
+\begin{gather}
+    E_2(z_1(t)) = \frac{q_1 - z_1(t)}{q_1 - q_2}
+\end{gather}
+\begin{gather*}
+    E_1(z_1(t)) = 1 - E_2(z_1(t))
+\end{gather*}
+\begin{gather}
+    E_1(z_1(t)) = \frac{z_1(t) - q_2}{q_1 - q_2}
+\end{gather}
+
+As funções de pertinência dos demais termos podem ser obtidas de forma análoga.
+
+Termo não linear $z_2(t)$:
+
+\begin{gather*}
+    \max_{ v_{in,1}(t)} z_2(t) = \max v_{in,1}(t) = b_1
+\end{gather*}
+
+\begin{gather}
+    \min_{ v_{in,1}(t)} z_2(t) = \min v_{in,1}(t) = b_2
+\end{gather}
+
+\begin{gather*}
+    z_2(t) = \sum\limits_{j=1}^{2} M_j(z_2(t))b_i
+\end{gather*}
+\begin{gather}
+    M_1(z_2(t)) = \frac{z_2(t) - b_2}{b_1 - b_2}
+\end{gather}
+\begin{gather}
+    M_2(z_2(t)) = \frac{b_1 - z_2(t)}{b_1 - b_2}
+\end{gather}
+
+Termo não linear $z_3(t)$:
+
+\begin{gather*}
+    \max_{\delta v_{C,2}(t)} z_3(t) = \max \delta v_{C,2}(t) = c_1
+\end{gather*}
+
+\begin{gather}
+    \min_{\delta v_{C,2}(t)} z_3(t) = \min \delta v_{C,2}(t) = c_2
+\end{gather}
+
+\begin{gather*}
+    z_3(t) = \sum\limits_{k=1}^{2} N_k(z_3(t))c_i
+\end{gather*}
+\begin{gather}
+    N_1(z_3(t)) = \frac{z_3(t) - c_2}{c_1 - c_2}
+\end{gather}
+\begin{gather}
+    N_2(z_3(t)) = \frac{c_1 - z_3(t)}{c_1 - c_2}
+\end{gather}
+
+Termo não linear $z_4(t)$:
+
+\begin{gather*}
+    \max_{\delta i_{L,2}(t)} z_4(t) = \max \delta i_{L,2}(t) = d_1
+\end{gather*}
+
+\begin{gather}
+    \min_{\delta i_{L,2}(t)} z_4(t) = \min \delta i_{L,2}(t) = d_2
+\end{gather}
+
+\begin{gather*}
+    z_4(t) = \sum\limits_{l=1}^{2} S_l(z_4(t))d_i
+\end{gather*}
+\begin{gather}
+    S_1(z_4(t)) = \frac{z_4(t) - d_2}{d_1 - d_2}
+\end{gather}
+\begin{gather}
+    S_2(z_4(t)) = \frac{d_1 - z_4`(t)}{d_1 - d_2}
+\end{gather}
+
+O modelo fuzzy da microrrede é representado como: 
+
+\begin{gather}
+    \begin{bmatrix}
+    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
+    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
+  \end{bmatrix} =
+  \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
+  \notag \\[12pt] \times
+  \{
+    \begin{bmatrix}
+    \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
+    0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
+    0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
+    \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
+    0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
+    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
+    \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
+  \end{bmatrix} \notag \\[12pt] +
+    \begin{bmatrix}
+    \ds \frac{b_j}{L_1} & 0                 & 0                                                        \\[12pt]
+    0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + c_k \right]     & 0                              
+                                    \\[12pt]
+    0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
+    0                      & 0                 & - \ds \frac{R_{EQ}}{R_{1,2}C_1}                    \\[12pt]
+    0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + d_l \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
+    0                      & 0                 & 0 
+                                    \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta d_1(t) \\ \delta d_2(t) \\ \delta i_{B}(t)
+  \end{bmatrix} +
+  \begin{bmatrix}
+      0                   & 0
+                            \\[12pt]
+      \ds \frac{1}{L_2}   & 0 
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & 0
+                            \\[12pt]
+      0                   & - \ds q_i \cdot v_{C_K}^o
+                            \\[12pt]
+  \end{bmatrix}
+  \begin{bmatrix}
+    \delta v_{in,2}(t) \\ \delta P_{cpl}(t)
+  \end{bmatrix}
+  \}
+\end{gather}
+
+Em que:
+
+\begin{equation*}
+    a_{66} = \ds q_i \cdot P_{cpl}^o - \frac{1}{R_{crl} C_K}
+\end{equation*} 
+
+ou, 
+
+\begin{gather}
+    \begin{bmatrix}
+    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
+    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
+  \end{bmatrix} =
+  \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
+  \notag \\[12pt] \times
+  \left\{
+    A_{ijkl}x(t) + B_{ijkl}u(t) + F_{ijkl}\omega(t)
+  \right\}
+\end{gather}
+
+\subsection*{Regras do modelo}
+
+As regras do modelo mostram as combinações entre as funções de pertinência do modelo.
+
+\vspace{0.5cm}
+\textbf{Regra 1}: \\
+\textbf{SE} $z_1(t)$ é "Positivo" e $z_2(t)$ é "Grande" e $z_3(t)$ é "Grande" e $z_4(t)$ é "Grande," \\
+\textbf{ENTÃO} $\dot{x}(t) = A_{1111} x(t) + B_{1111} u(t) + F_{1111} \omega(t).$
+
+\vspace{0.5cm}
+\textbf{Regra 2}: \\
+\textbf{SE} $z_1(t)$ é "Positivo" e $z_2(t)$ é "Grande" e $z_3(t)$ é "Grande" e $z_4(t)$ é "Pequeno," \\
+\textbf{ENTÃO} $\dot{x}(t) = A_{1112} x(t) + B_{1112} u(t) + F_{1112} \omega(t).$
+
+\vspace{0.5cm}
+\textbf{Regra 3}: \\
+\textbf{SE} $z_1(t)$ é "Positivo" e $z_2(t)$ é "Grande" e $z_3(t)$ é "Pequeno" e $z_4(t)$ é "Grande," \\
+\textbf{ENTÃO} $\dot{x}(t) = A_{1121} x(t) + B_{1121} u(t) + F_{1121} \omega(t).$
+
+\vspace{0.5cm}
+\textbf{Regra 4}: \\
+\textbf{SE} $z_1(t)$ é "Positivo" e $z_2(t)$ é "Grande" e $z_3(t)$ é "Pequeno" e $z_4(t)$ é "Pequeno," \\
+\textbf{ENTÃO} $\dot{x}(t) = A_{1122} x(t) + B_{1122} u(t) + F_{1122} \omega(t).$
