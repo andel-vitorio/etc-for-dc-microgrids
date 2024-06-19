@@ -23,7 +23,7 @@
 % }
 
 \newcommand{\nle}{%
-  \notag \\[8pt]
+  \notag \\[0pt]
 }
 
 \setlength{\parindent}{0pt}
@@ -41,155 +41,159 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.87]{assets/dc_microgrid.eps}
+  \includegraphics[scale=1.]{assets/dc_microgrid.eps}
   \caption{Esquemático da Microrrede CC}
   \label{fig:exemplo}
 \end{figure}
 
-\subsection*{Modelagem do Subsistema: Geração CC}
+\subsection*{Modelagem do Subsistema: Geração 1}
 
-O circuito da geração CC está representado abaixo:
+O sistema da geração 1, apresentado na Figura~\ref{fig:subsystem_1},  é composto por uma fonte de alimentação cuja tensão varia ao longo do tempo, a qual está conectada a um conversor do tipo {\it buck}. Este conversor, por sua vez, está ligado a um filtro RC. Finalmente, o conjunto é conectado ao barramento de corrente contínua (CC).
 
 \begin{figure}[H]
   \centering
   \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
     \ctikzset{bipoles/length=1cm}
     \draw
-    (0,4) to[vsource, v_=$v_G(t)$] (0,0)
-    (0,4) to[normal open switch, l=$S_G$] (4,4)
-    (4,0) to[diode, l=$D_G$] (4,4)
-    (4,4) to[L, l=$L_G$, i_=$i_{L_G}(t)$] (8,4)
-    (7,4) to[R, l=$R_{G_1}$] (11,4)
-    (11,4) to[C, l=$C_G$, v=$v_{C_G}(t)$] (11,0)
-    (11,4) to[R, l=$R_{G_2}$, i_=$i_{G}(t)$] (15,4)
-
+    (0,4) to[vsource, v_=$v_{\text{in}, 1}(t)$] (0,0)
+    (0,4) to[normal open switch, l=$S_1$] (4,4)
+    (4,0) to[diode, l=$D_1$] (4,4)
+    (4,4) to[L, l=$L_1$, i_=$i_{L,1}(t)$] (8,4)
+    (7,4) to[R, l=$R_{1,1}$] (11,4)
+    (11,4) to[C, l=$C_1$, v=$v_{C,1}(t)$] (11,0)
+    (11,4) to[R, l=$R_{1,2}$, i_=$i_{E,1}(t)$] (15,4)
+    
     (15,4) to[short, -o] (16,4)
     (0,0) to[short, -o] (16,0)
-
+    
     (16,4) to[open, v=$v_E(t)$] (16,0)
     ;
   \end{circuitikz}
+  \caption{Circuito elétrico do sistema da geração 1.}
+  \label{fig:subsystem_1}
 \end{figure}
 
 Aplicando a LKT na segunda malha a partir da esquerda, obtemos:
 \begin{gather}
-  d_G(t) v_G(t) - L_G \dot{i}_{L_G} - R_{G_1} i_{L_G}(t) - v_{C_G}(t) = 0 \nle
-  \dot{i}_{L_G} = - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t)
+  d_1(t) v_{\text{in}, 1}(t) - L_1 \dot{i}_{L,1} - R_{1,1} i_{L,1}(t) - v_{C,1}(t) = 0 \nle
+  \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t)
 \end{gather}
 
 Aplicando a LKC, obtemos:
 \begin{gather}
-  i_{L_G}(t) = C_G \dot{v}_{C_G} + i_G(t)
+  i_{L,1}(t) = C_1 \dot{v}_{C,1} + i_{E,1}(t)
 \end{gather}
 
-Têm-se que, $i_G(t) = \frac{v_{C_G}(t) - v_E(t)}{R_{G_2}}$. Logo,
+Têm-se que, $i_{E,1}(t) = \ds \frac{v_{C,1}(t) - v_E(t)}{R_{1,2}}$. Logo,
 \begin{gather}
-  i_{L_G}(t) = C_G \dot{v}_{C_G} + \frac{1}{R_{G_2}}v_{C_G}(t) - \frac{1}{R_{G_2}} v_E(t) \nle
-  i_{L_G}(t) = C_G \dot{v}_{C_G} + \frac{1}{R_{G_2}}v_{C_G}(t) - \frac{1}{R_{G_2}} v_E(t) \nle
-  \dot{v}_{C_G} = \frac{1}{C_G} i_{L_G}(t) - \frac{1}{R_{G_2}C_G }v_{C_G}(t) + \frac{1}{R_{G_2} C_G} v_E(t)
+  i_{L,1}(t) = C_1 \dot{v}_{C,1} + \frac{1}{R_{1,2}}v_{C,1}(t) - \frac{1}{R_{1,2}} v_E(t) \nle
+  i_{L,1}(t) = C_1 \dot{v}_{C,1} + \frac{1}{R_{1,2}}v_{C,1}(t) - \frac{1}{R_{1,2}} v_E(t) \nle
+  \dot{v}_{C,1} = \frac{1}{C_1} i_{L,1}(t) - \frac{1}{R_{1,2}C_1 }v_{C,1}(t) + \frac{1}{R_{1,2} C_1} v_E(t)
 \end{gather}
 
 Portanto, o modelo do subsistema da geração é:
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_G} = \displaystyle - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t) \\[8pt]
-    \dot{v}_{C_G} = \displaystyle \frac{1}{C_G} i_{L_G}(t) - \frac{1}{R_{G_2}C_G }v_{C_G}(t) + \frac{1}{R_{G_2} C_G} v_E(t)
+    \dot{i}_{L,1} = \ds - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t) \\[12pt]
+    \dot{v}_{C,1} = \ds \frac{1}{C_1} i_{L,1}(t) - \frac{1}{R_{1,2}C_1 }v_{C,1}(t) + \frac{1}{R_{1,2} C_1} v_E(t)
   \end{cases}
 \end{gather}
 
 \vspace*{8pt}
-\subsection*{Modelagem do Subsistema: Bateria}
+\subsection*{Modelagem do Subsistema: Conversor Boost}
 
-O circuito que representa o subsistema da bateria está apresentado abaixo:
+O sistema da geração 2, apresentado na Figura~\ref{fig:subsystem_2},  é composto por uma fonte de alimentação cuja tensão varia ao longo do tempo, a qual está conectada a um conversor do tipo {\it boost}. Este conversor, por sua vez, está ligado a um filtro RC. Finalmente, o conjunto é conectado ao barramento de corrente contínua (CC).
 
 \begin{figure}[H]
   \centering
   \begin{circuitikz}[american, scale=0.5, font=\footnotesize]
     \ctikzset{bipoles/length=1cm}
     \draw
-    (0,4) to[battery, v_=$v_B(t)$] (0,0)
-    (0,4) to[L,l=$L_{B}$, i_=$i_{L_B}(t)$] (4,4)
-    (3,4) to[R,l=$R_{B_1}$] (7,4)
-    (7,0) to[normal closed switch, l=$S_{B_1}$] (7,4)
-    (7,4) to[normal open switch, l=$S_{B_2}$] (11,4)
-    (11,4) to[C, l=$C_{B}$, v=$v_{C_B}(t)$] (11,0)
-    (11,4) to[R,l=$R_{B_2}$, i=$i_B(t)$, -o] (15,4)
-    (0,0) to[short, -o] (15,0)
-    (15,4) to[open, v=$v_E(t)$] (15,0)
+    (-4,4) to[vsource, v_=$v_{\text{in}, 2}(t)$] (-4,0)
+    (-4,4) to[R, l=$R_{2,1}$, i_=$i_{L,2}$] (0,4)
+    (0,4) to[L, l=$L_2$] (4,4)
+    (4,0) to[normal open switch, l=$S_2$] (4,4)
+    (4,4) to[diode, l=$D_2$] (8,4)
+    (8,4) to[C, v=$v_{C,2}$, l=$C_2$] (8,0)
+    (8,4) to[R, l=$R_{2,2}$, -o, i=$i_{E,2}$] (12,4)
+    (-4,0) to[short, -o] (12,0)
+    (12,4) to[open, v=$v_E$] (12,0)
     ;
   \end{circuitikz}
+  \caption{Circuito elétrico do sistema da geração 2.}
+  \label{fig:subsystem_2}
 \end{figure}
 
-\subsubsection*{Para $S_{B_1}$ fechada e $S_{B_2}$ aberta: $d_B(t) \cdot T_se$}
+\subsubsection*{Para $S_2$ fechada: $d_2(t) \cdot T_s$}
 
 Aplicando a LKT na malha mais a esquerda, obtemos:
 \begin{gather}
-  v_B(t) - L_B \dot{i}_{L_B} - R_{B_1} i_{L_B} (t) = 0 \nle
-  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t)
+  v_{\text{in}, 2}(t) - R_{2,1} i_{L,2}(t) - L_2 \dot i_{L,2} = 0  \nle
+  \dot i_{L,2} = - \frac{R_{2,1}}{L_2} i_{L,2}(t) + \frac{1}{L_2} v_{\textit{in}, 2}(t)
 \end{gather}
 
 Aplicando a LKC na malha mais a direita, tém-se:
 \begin{gather}
-  i_B(t) + C_B \dot{v}_{C_B}(t) = 0
+  i_{E,2}(t) + C_2 \dot{v}_{C,2} = 0
 \end{gather}
 
-Como $i_B(t) = \frac{v_{C_B}(t) - v_E(t)}{R_{B_2}}$, têm-se:
+Como $i_{E,2}(t) = \ds \frac{v_{C,2}(t) - v_E(t)}{R_{2,2}}$, têm-se:
 \begin{gather}
-  \frac{v_{C_B}(t)}{R_{B_2}} - \frac{v_E(t)}{R_{B_2}} + C_B \dot{v}_{C_B}(t) = 0 \nle
-  \dot{v}_{C_B}(t) = - \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)
+  \frac{v_{C,2}(t)}{R_{B,2}} - \frac{v_E(t)}{R_{B,2}} + C_2 \dot{v}_{C,2} = 0 \nle
+  \dot{v}_{C,2} = - \frac{1}{R_{B,2} C_2} v_{C,2}(t) + \frac{1}{R_{B,2} C_2} v_{E}(t)
 \end{gather}
 
 Assim, neste modo, têm-se:
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t) \\[8pt]
-    \dot{v}_{C_B}(t) = \displaystyle - \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)
+    \dot i_{L,2} = \ds - \frac{R_{2,1}}{L_2} i_{L,2}(t) + \frac{1}{L_2} v_{\textit{in}, 2}(t) \\[12pt]
+    \dot{v}_{C,2} = \ds - \frac{1}{R_{B,2} C_2} v_{C,2}(t) + \frac{1}{R_{B,2} C_2} v_{E}(t)
   \end{cases}
 \end{gather}
 
 \vspace*{8pt}
-\subsubsection*{Para $S_{B_1}$ aberta e $S_{B_2}$ fechada: $\left[1 - d_B(t)\right] \cdot T_s$}
+\subsubsection*{Para $S_2$ aberta: $\left[1 - d_2(t)\right] \cdot T_s$}
 
 Aplicando a LKT, obtemos:
 \begin{gather}
-  v_B(t) - L_B \dot{i}_{L_B} - R_{B_1} i_{L_B} (t) - v_{C_B} (t)= 0 \nle
-  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t)
+  v_{\text{in}, 2}(t) - L_2 \dot i_{L,2} - R_{2,1} i_{L,2} (t) - v_{C,2} (t)= 0 \nle
+  \dot i_{L,2} = - \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) + \frac{1}{L_2} v_{\text{in}, 2}(t)
 \end{gather}
 
 Aplicando a LKC, obtemos:
 \begin{gather}
-  i_{L_B}(t) = C_B v_{C_B}(t) + i_B(t) \nle
-  i_{L_B}(t) = C_B \dot{v}_{C_B}(t) +  \frac{v_{C_B}(t)}{R_{B_2}} - \frac{v_E(t)}{R_{B_2}} \nle
-  \dot{v}_{C_B}(t) =  \frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+  i_{L,2}(t) = C_2 \dot v_{C,2} + i_{E,2}(t) \nle
+  i_{L,2}(t) = C_2 \dot v_{C,2} +  \frac{v_{C,2}(t)}{R_{2,2}} - \frac{v_E(t)}{R_{2,2}} \nle
+  \dot{v}_{C,2} =  \frac{1}{C_2} i_{L,2}(t) - \frac{1}{R_{2,2}C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} v_E(t)
 \end{gather}
 
 Assim, neste modo, têm-se:
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t) \\[8pt]
-    \dot{v}_{C_B} = \displaystyle \frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+    \dot i_{L,2} = \ds - \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) + \frac{1}{L_2} v_{\text{in}, 2}(t) \\[12pt]
+    \dot{v}_{C,2} = \ds \frac{1}{C_2} i_{L,2}(t) - \frac{1}{R_{2,2}C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} v_E(t)
   \end{cases}
 \end{gather}
 
 \vspace*{8pt}
 \subsubsection*{Modelo Médio Completo}
-A equação completa da dinâmica da corrente ${i}_{L_B}(t)$ é:
+A equação completa da dinâmica da corrente ${i}_{L,2}(t)$ é:
 \begin{gather}
-  \dot{i}_{L_B} = \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) + \frac{1}{L_B} v_B(t)\right] d_B(t) + \left[- \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} v_B(t)\right] \left[1 - d_B(t)\right] \nle
-  \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t)
+  \dot{i}_{L,2} = \left[- \frac{R_{2,1}}{L_2} i_{L,2}(t) + \frac{1}{L_2} v_{\textit{in}, 2}(t)\right] d_2(t) + \left[- \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) + \frac{1}{L_2} v_{\text{in}, 2}(t)\right] \left[1 - d_2(t)\right] \nle
+  \dot{i}_{L,2} = - \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) \left[1 - d_2(t)\right] + \frac{1}{L_2} v_{\text{in}, 2}(t)
 \end{gather}
 
 E da tensão,
 \begin{gather}
-  \dot{v}_{C_B}(t) = \left[- \frac{1}{R_{B_2} C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_{E}(t)\right] d_B(t) + \left[\frac{1}{C_B} i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)\right] \left[1 - d_B(t)\right] \nle
-  \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+  \dot{v}_{C,2} = \left[- \frac{1}{R_{B,2} C_2} v_{C,2}(t) + \frac{1}{R_{B,2} C_2} v_{E}(t)\right] d_2(t) + \left[\frac{1}{C_2} i_{L,2}(t) - \frac{1}{R_{2,2} C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} v_E(t)\right] \left[1 - d_2(t)\right] \nle
+  \dot{v}_{C,2} = \frac{1}{C_2} i_{L,2}(t) \left[1 - d_2(t)\right] - \frac{1}{R_{2,2} C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} v_E(t)
 \end{gather}
 
-Portanto, o modelo dinâmico do subsistema da bateria é:
+Portanto, o modelo dinâmico do sistema da geração 2 é:
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_B} = \displaystyle - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t) \\[8pt]
-    \dot{v}_{C_B} = \displaystyle \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1}{R_{B_2}C_B} v_{C_B}(t) + \frac{1}{R_{B_2} C_B} v_E(t)
+    \dot{i}_{L,2} =\ds - \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) \left[1 - d_2(t)\right] + \frac{1}{L_2} v_{\text{in}, 2}(t) \\[12pt]
+    \dot{v}_{C,2} =\ds \frac{1}{C_2} i_{L,2}(t) \left[1 - d_2(t)\right] - \frac{1}{R_{2,2} C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} v_E(t)
   \end{cases}
 \end{gather}
 
@@ -230,8 +234,8 @@ Aplicando a LKC, obtemos:
 Portanto, o modelo dinâmico do subsistema das cargas é:
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_K} = \displaystyle - \frac{R_K}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{1}{L_K} v_E(t) \\[8pt]
-    \dot{v}_{C_K} = \displaystyle \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
+    \dot{i}_{L_K} = \ds - \frac{R_K}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{1}{L_K} v_E(t) \\[12pt]
+    \dot{v}_{C_K} = \ds \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
   \end{cases}
 \end{gather}
 
@@ -239,233 +243,184 @@ Portanto, o modelo dinâmico do subsistema das cargas é:
 
 Do esquemático, têm-se que:
 \begin{gather}
-  i_G(t) + i_B(t) = i_{L_K}(t) \nle
-  \frac{1}{R_{G_2}} v_{C_G}(t) - \frac{1}{R_{G_2}} v_E(t) +
-  \frac{1}{R_{B_2}} v_{C_B}(t) - \frac{1}{R_{B_2}} v_E(t) =  i_{L_K}(t) \nle
-  i_G(t) + i_B(t) = i_{L_K}(t) \nle
-  \frac{1}{R_{G_2}} v_{C_G}(t) + \frac{1}{R_{B_2}} v_{C_B}(t)
-  - \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right] v_E(t) =  i_{L_K}(t) \nle
-  v_E(t) = - \frac{1}{\displaystyle \frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}} i_{L_K}(t) + \frac{1}{R_{G_2} \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right]} v_{C_G}(t) + \frac{1}{R_{B_2} \left[\frac{1}{R_{G_2}} + \frac{1}{R_{B_2}}\right]} v_{C_B}(t) \nle
-  v_E(t) = - \frac{R_{G_2}R_{B_2}}{R_{G_2} + R_{B_2}} i_{L_K}(t) + \frac{R_{G_2}R_{B_2}}{R_{G_2} \left(R_{G_2} + R_{B_2}\right)} v_{C_G}(t) + \frac{R_{G_2}R_{B_2}}{R_{B_2} \left(R_{G_2} + R_{B_2}\right)}  v_{C_B}(t) \nle
-  v_E(t) = - \frac{R_{G_2}R_{B_2}}{R_{G_2} + R_{B_2}} i_{L_K}(t) + \frac{R_{B_2}}{R_{G_2} + R_{B_2}} v_{C_G}(t) + \frac{R_{G_2}}{R_{G_2} + R_{B_2}}  v_{C_B}(t) \nle
-  v_E(t) = - R_{G_2} R_{E_1} i_{L_K}(t) + R_{E_1} v_{C_G}(t) + R_{E_2} v_{C_B}(t)
+  i_{E,1}(t) + i_{E,2}(t) = i_B(t) + i_{L_K}(t) \nle
+  \frac{1}{R_{1,2}} v_{C,1}(t) - \frac{1}{R_{1,2}} v_E(t) + \frac{1}{R_{2,2}} v_{C,2}(t) - \frac{1}{R_{2,2}} v_E(t) =
+  i_B(t) + i_{L_K}(t) \nle
+  v_E(t) = \frac{R_{EQ}}{R_{1,2}} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2}} v_{C,2}(t) - R_{EQ} i_B(t) - R_{EQ} i_{L_K}(t)
 \end{gather}
 
-onde, $R_{E_1} = \displaystyle \frac{R_{B_2}}{R_{G_2} + R_{B_2}}$ e $R_{E_2} = \displaystyle \frac{R_{G_2}}{R_{G_2} + R_{B_2}}.$
-\vspace*{2pt}
+onde, $R_{EQ} = \ds \frac{R_{1,2}R_{2,2}}{R_{1,2} + R_{2,2}}$.
+
+\vspace*{8pt}
+
+Reescrevendo a equação de $i_{L_K}$, obtêm-se:
+\begin{gather}
+  \dot{i}_{L_K} =  - \frac{R_K}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{1}{L_K} \left[\frac{R_{EQ}}{R_{1,2}} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2}} v_{C,2}(t) - R_{EQ} i_B(t) - R_{EQ} i_{L_K}(t)\right] \nle
+  \dot{i}_{L_K} =  - \frac{R_K + R_{EQ}}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{R_{EQ}}{R_{1,2} L_K} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2} L_K} v_{C,2}(t) - \frac{R_{EQ}}{L_K} i_B(t)
+\end{gather}
+
+Reescrevendo a equação de $v_{C,1}$, obtêm-se:
+\begin{gather*}
+  \dot{v}_{C,1} = \frac{1}{C_1} i_{L,1}(t) - \frac{1}{R_{1,2}C_1} v_{C,1}(t) + \frac{1}{R_{1,2} C_1} \left[\frac{R_{EQ}}{R_{1,2}} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2}} v_{C,2}(t) - R_{EQ} i_B(t) - R_{EQ} i_{L_K}(t)\right]
+\end{gather*}
+\begin{gather}
+  \dot{v}_{C,1} = \frac{1}{C_1} i_{L,1}(t) - \frac{1}{R_{1,2}C_1} \left(1  - \frac{R_{EQ}}{R_{1,2}}\right) v_{C,1}(t) +\frac{1}{C_1 (R_{1,2} + R_{2,2})} v_{C,2}(t) - \frac{R_{EQ}}{R_{1,2}C_1} i_B(t) - \frac{R_{EQ}}{R_{1,2}C_1} i_{L_K}(t)
+\end{gather}
+
+Reescrevendo a equação de $v_{C,2}$, obtêm-se:
+\begin{gather*}
+  \dot{v}_{C,2} = \frac{1}{C_2} i_{L,2}(t) \left[1 - d_2(t)\right] - \frac{1}{R_{2,2} C_2} v_{C,2}(t) + \frac{1}{R_{2,2} C_2} \left[\frac{R_{EQ}}{R_{1,2}} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2}} v_{C,2}(t) - R_{EQ} i_B(t) - R_{EQ} i_{L_K}(t)\right]
+\end{gather*}
+\begin{multline}
+  \dot{v}_{C,2} = \frac{1}{C_2} \left[1 - d_2(t)\right] i_{L,2}(t)
+  - \frac{1}{R_{2,2} C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}(t)\\
+  + \frac{1}{C_2 (R_{1,2} + R_{2,2})} v_{C,1}(t)
+  - \frac{R_{EQ}}{R_{2,2}C_2} i_B(t) - \frac{R_{EQ}}{R_{2,2}C_2} i_{L_K}(t)
+\end{multline}
+
 Assim, o modelo centralizado é:
 
 \begin{gather}
   \begin{cases}
-    \dot{i}_{L_G} = \ds - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t)                                                                                                \\[12pt]
-    \dot{i}_{L_B} = \ds - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t)                                                                            \\[12pt]
-    \dot{i}_{L_K} = \ds - \frac{R_K + R_{G_2} R_{E_1}}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t)  + \frac{R_{E_1}}{L_K} v_{C_G}(t) + \frac{R_{E_2}}{L_K} v_{C_B}(t)                                           \\[12pt]
-    \dot{v}_{C_G} = \ds \frac{1}{C_G} i_{L_G}(t) - \frac{1 - R_{E_1}}{C_G R_{G_2}} v_{C_G}(t) - \frac{R_{E_1}}{C_G} i_{L_K}(t) + \frac{R_{E_2}}{R_{G_2} C_G} v_{C_B}(t)                                        \\[12pt]
-    \dot{v}_{C_B} = \ds \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1 - R_{E_2}}{R_{B_2}C_B} v_{C_B}(t) - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} i_{L_K}(t) + \frac{R_{E_1}}{R_{B_2} C_B} v_{C_G}(t) \\[12pt]
-    \dot{v}_{C_K} = \ds \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
+    \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t)                                                                                                                        \\[12pt]
+    \dot{v}_{C,1} = \frac{1}{C_1} i_{L,1}(t) - \frac{1}{R_{1,2}C_1} \left(1  - \frac{R_{EQ}}{R_{1,2}}\right) v_{C,1}(t) +\frac{1}{C_1 (R_{1,2} + R_{2,2})} v_{C,2}(t) - \frac{R_{EQ}}{R_{1,2}C_1} i_B(t) - \frac{R_{EQ}}{R_{1,2}C_1} i_{L_K}(t) \\[12pt]
+    \dot{i}_{L,2} = - \frac{R_{2,1}}{L_2} i_{L,2}(t) - \frac{1}{L_2} v_{C,2}(t) \left[1 - d_2(t)\right] + \frac{1}{L_2} v_{\text{in}, 2}(t)                                                                                                     \\[12pt]
+    \dot{v}_{C,2} = \frac{1}{C_2} \left[1 - d_2(t)\right] i_{L,2}(t)
+    - \frac{1}{R_{2,2} C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}(t)
+    + \frac{1}{C_2 (R_{1,2} + R_{2,2})} v_{C,1}(t)
+    - \frac{R_{EQ}}{R_{2,2}C_2} i_B(t) - \frac{R_{EQ}}{R_{2,2}C_2} i_{L_K}(t)                                                                                                                                                              \\[12pt]
+    \dot{i}_{L_K} = - \frac{R_K + R_{EQ}}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t) + \frac{R_{EQ}}{R_{1,2} L_K} v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2} L_K} v_{C,2}(t) - \frac{R_{EQ}}{L_K} i_B(t)                                                \\[12pt]
+    \dot{v}_{C_K} = \frac{1}{C_K} i_{L_K} - \frac{1}{R_{crl} C_K} v_{C_K}(t) - \frac{1}{C_K} \frac{P_{cpl}(t)}{v_{C_K}(t)}
   \end{cases}
 \end{gather}
 
-No espaço de estados, temos:
-\begin{gather}
-  \begin{bmatrix}
-    \dot{i}_{L_G} \\[12pt] \dot{i}_{L_B} \\[12pt] \dot{i}_{L_K} \\[12pt]
-    \dot{v}_{C_G} \\[12pt] \dot{v}_{C_B} \\[12pt] \dot{v}_{C_K}
-  \end{bmatrix} =
-  \begin{bmatrix}
-    \ds - \frac{R_{G_1}}{L_G} & 0                         & 0                                         & \ds - \frac{1}{L_G}                  & 0                                    & 0                           \\[12pt]
-    0                         & \ds - \frac{R_{B_1}}{L_B} & 0                                         & 0                                    & \ds - \frac{1}{L_B}                  & 0                           \\[12pt]
-    0                         & 0                         & - \ds \frac{R_K + R_{G_2} R_{E_1}}{L_K}   & \ds \frac{R_{E_1}}{L_K}              & \ds \frac{R_{E_2}}{L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
-    \ds \frac{1}{C_G}         & 0                         & \ds - \frac{R_{E_1}}{C_G}                 & \ds - \frac{1 - R_{E_1}}{R_{G_2}C_G} & \ds \frac{R_{E_2}}{R_{G_2}C_G}       & 0                           \\[12pt]
-    0                         & \ds \frac{1}{C_B}         & \ds - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} & \ds \frac{R_{E_1}}{R_{B_2} C_B}      & \ds - \frac{1 - R_{E_2}}{R_{B_2}C_B} & 0                           \\[12pt]
-    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & \ds - \frac{1}{R_{crl} C_K}
-  \end{bmatrix}
-  \begin{bmatrix}
-    i_{L_G}(t) \\[12pt] i_{L_B}(t) \\[12pt] i_{L_K}(t) \\[12pt]
-    v_{C_G}(t) \\[12pt] v_{C_B}(t) \\[12pt] v_{C_K}(t)
-  \end{bmatrix} \notag \\[12pt] +
-  \begin{bmatrix}
-    \ds \frac{v_G(t)}{L_G} & 0                 & 0                            & 0                              \\[12pt]
-    0                      & \ds \frac{1}{L_B} & \ds - \frac{v_B(t)}{L_B}     & 0                              \\[12pt]
-    0                      & 0                 & 0                            & 0                              \\[12pt]
-    0                      & 0                 & 0                            & 0                              \\[12pt]
-    0                      & 0                 & - \ds \frac{i_{L_B}(t)}{C_B} & 0                              \\[12pt]
-    0                      & 0                 & 0                            & - \ds \frac{1}{C_K v_{C_K}(t)} \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
-    d_G(t) \\ v_B(t) \\ d_B(t) \\ P_{cpl}(t)
-  \end{bmatrix}
-\end{gather}
 
-\begin{equation}
-  v_E(t) =
-  \begin{bmatrix}
-    0 & 0 & 0                 & 0       & 0       & 0 \\[12pt]
-    0 & 0 & 0                 & 0       & 0       & 0 \\[12pt]
-    0 & 0 & - R_{G_2} R_{E_1} & 0       & 0       & 0 \\[12pt]
-    0 & 0 & 0                 & R_{E_1} & 0       & 0 \\[12pt]
-    0 & 0 & 0                 & 0       & R_{E_2} & 0 \\[12pt]
-    0 & 0 & 0                 & 0       & 0       & 0 \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
-    i_{L_G}(t) \\[12pt] i_{L_B}(t) \\[12pt] i_{L_K}(t) \\[12pt]
-    v_{C_G}(t) \\[12pt] v_{C_B}(t) \\[12pt] v_{C_K}(t)
-  \end{bmatrix}
-\end{equation}
-
-\subsection*{Translação}
+\subsection*{Translação do Modelo}
 
 Parcelando os estados e as entradas do sistema em termos fixos e em termos variantes no tempo, obtemos:
 
-\begin{gather}
-  i_{L_G}(t) = i_{L_G}^o + \delta i_{L_G}(t) \nle
-  i_{L_B}(t) = i_{L_B}^o + \delta i_{L_B}(t) \nle
-  i_{L_K}(t) = i_{L_K}^o + \delta i_{L_K}(t) \nle
-  v_{C_G}(t) = v_{C_G}^o + \delta v_{C_G}(t) \nle
-  v_{C_B}(t) = v_{C_B}^o + \delta v_{C_B}(t) \nle
-  v_{C_K}(t) = v_{C_K}^o + \delta v_{C_K}(t) \nle
-  d_G(t) = d_G^o + \delta d_G(t) \nle
-  d_B(t) = d_B^o + \delta d_B(t) \nle
-  v_B(t) = v_B^o + \delta v_B(t) \nle
-  P_{cpl}(t) = P_{cpl}^o + \delta P_{cpl}(t)
-\end{gather}
+\begin{align}
+  i_{L,1}(t) & = i_{L,1}^o + \delta i_{L,1}(t) & i_{L,2}(t) & = i_{L,2}^o + \delta i_{L,2}(t) & i_{L_K}(t) & = i_{L_K}^o + \delta i_{L_K}(t) \nle
+  v_{C,1}(t) & = v_{C,1}^o + \delta v_{C,1}(t) & v_{C,2}(t) & = v_{C,2}^o + \delta v_{C,2}(t) & v_{C_K}(t) & = v_{C_K}^o + \delta v_{C_K}(t) \nle
+  d_1(t)     & = d_1^o + \delta d_1(t)         & d_2(t)     & = d_2^o + \delta d_2(t)         & P_{cpl}(t) & = P_{cpl}^o + \delta P_{cpl}(t) \nle
+             &                                 & v_{\text{in},2}(t)     & = v_{\text{in},2}^o + \delta v_{\text{in},2}(t)         &            &
+\end{align}
 
-\textbf{\textit{Corrente $i_{L_G}$ transladada}} \vspace*{12pt}
+\textbf{\textit{Corrente $i_{L,1}$ transladada}} \vspace*{12pt}
 
-Para $\dot{i}_{L_G}$, têm-se:
+Para $\dot{i}_{L,1}$, têm-se:
 \begin{gather}
-  - \frac{R_{G_1}}{L_G} i_{L_G}^o - \frac{1}{L_G} v_{C_G}^o + \frac{v_G(t)}{L_G} d_G^o = 0 \nle
-  - R_{G_1} i_{L_G}^o - v_{C_G}^o + v_G(t) d_G^o = 0 \nle
-  d_G^o = \frac{R_{G_1}}{v_G(t)} i_{L_G}^o + \frac{1}{v_G(t)} v_{C_G}^o
+  - \frac{R_{1,1}}{L_1} i_{L,1}^o - \frac{1}{L_1} v_{C,1}^o + \frac{v_{\text{in}, 1}(t)}{L_1} d_1^o = 0 \Rightarrow
+  - R_{1,1} i_{L,1}^o - v_{C,1}^o + v_{\text{in}, 1}(t) d_1^o = 0 \nle
+  d_1^o = \frac{R_{1,1}}{v_{\text{in}, 1}(t)} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}(t)} v_{C,1}^o
 \end{gather}
 
 Substituindo, obtemos:
 \begin{gather}
-  \dot{i}_{L_G} = - \frac{R_{G_1}}{L_G} i_{L_G}(t) - \frac{1}{L_G} v_{C_G}(t) + \frac{v_G(t)}{L_G} d_G(t) \nle
-  \delta \dot{i}_{L_G} = - \frac{R_{G_1}}{L_G} \left[i_{L_G}^o + \delta i_{L_G}(t)\right]
-  - \frac{1}{L_G} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
-  + \frac{v_G(t)}{L_G} \left[\frac{R_{G_1}}{v_G(t)} i_{L_G}^o + \frac{1}{v_G(t)} v_{C_G}^o + \delta d_G(t)\right] \nle
-  \delta \dot{i}_{L_G} = - \frac{R_{G_1}}{L_G} \delta i_{L_G}(t) - \frac{1}{L_G} \delta v_{C_G}(t) + \frac{v_B(t)}{L} \delta d_G(t)
+  \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t) \nle
+  \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \left[i_{L,1}^o + \delta i_{L,1}(t)\right]
+  - \frac{1}{L_1} \left[v_{C,1}^o + \delta v_{C,1}(t)\right]
+  + \frac{v_{\text{in}, 1}(t)}{L_1} \left[\frac{R_{1,1}}{v_{\text{in}, 1}(t)} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}(t)} v_{C,1}^o + \delta d_1(t)\right] \nle
+  \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} \delta d_1(t)
 \end{gather}
 
-\textbf{\textit{Corrente $i_{L_B}$ transladada}} \vspace*{12pt}
+\textbf{\textit{Corrente $i_{L,2}$ transladada}} \vspace*{12pt}
 
-Para $\dot{i}_{L_B}$, têm-se:
+Para $\dot{i}_{L,2}$, têm-se:
 \begin{gather}
-  - \frac{R_{B_1}}{L_B} i_{L_B}^o - \frac{1}{L_B} v_{C_B} ^o + \frac{1}{L_B} \left[1 - d_B^o\right] v_B^o = 0 \nle
-  d_B^o = -\frac{R_{B_1}}{v_B^o} i_{L_B}^o - \frac{1}{v_B^o} v_{C_B}^o + 1
+  - \frac{R_{2,1}}{L_2} i_{L,2}^o - \frac{1}{L_2} \left[1 - d_2^o\right] v_{C,2}^o + \frac{1}{L_2} v_{\text{in},2}^o = 0 \Rightarrow
+  d_2^o = 1 + \frac{R_{2,1}i_{L,2}^o}{v_{C,2}^o} - \frac{v_{\text{in},2}^o}{v_{C,2}^o}
 \end{gather}
 
 Substituindo, obtemos:
 \begin{gather}
-  \delta \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} i_{L_B}(t) - \frac{1}{L_B} v_{C_B} (t) + \frac{1}{L_B} \left[1 - d_B(t)\right] v_B(t) \nle
-  \delta \dot{i}_{L_B} = - \frac{R_{B_1}}{L_B} \left[i_{L_B}^o + \delta i_{L_B}(t)\right]
-  - \frac{1}{L_B} \left[v_{C_B}^o + \delta v_{C_B} (t)\right]
-  + \frac{1}{L_B} \left[\frac{R_{B_1}}{v_B^o} i_{L_B}^o + \frac{1}{v_B^o} v_{C_B}^o - \delta d_B(t)\right]
-  \left[v_B^o + \delta v_B(t)\right] \nle
-  \delta \dot{i}_{L_B} = - \frac{v_B^o}{L_B} \delta d_B(t) - \frac{R_{B_1}}{L_B} \delta i_{L_B}(t)
-  - \frac{1}{L_B} \delta v_{C_B}(t) - \frac{1}{L_B} \delta d_B(t) \delta v_B(t)
-  + \frac{R_{B_1} i_{L_B}^o + v_{C_B}^o}{L_B v_B^o} \delta v_B(t)
+  \delta \dot{i}_{L,2} = - \frac{R_{2,1}}{L_2} \left[i_{L,2}^o + \delta i_{L,2}(t)\right] - \frac{1}{L_2} \left[1 - d_2^o - \delta d_2(t)\right] \left[v_{C,2}^o + \delta v_{C,2}(t)\right] + \frac{1}{L_2} \left[v_{\text{in},2}^o + \delta v_{\text{in},2}(t)\right] \nle
+  \delta \dot{i}_{L,2} = \frac{R_{2,1}}{L_2} \delta i_{L,2}(t)
+  + \left[\frac{R_{2,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{\text{in},2}^o}{L_2 v_{C,2}^o}\right] \delta v_{C,2}(t) + \frac{1}{L_2} \left[v_{C,2}^o + \delta v_{C,2}(t)\right] \delta d_2(t) + \frac{1}{L_2} \delta v_{\text{in},2}(t)
 \end{gather}
 
 \textbf{\textit{Corrente $i_{L_K}$ transladada}} \vspace*{12pt}
 
 Para $\dot{i}_{L_K}$, têm-se:
 \begin{gather}
-  - \frac{R_K + R_{G_2} R_{E_1}}{L_K} i_{L_K}^o - \frac{1}{L_K} v_{C_K}^o  + \frac{R_{E_1}}{L_K} v_{C_G}^o + \frac{R_{E_2}}{L_K} v_{C_B}^o = 0 \nle
-  i_{L_K}^o = - \frac{1}{R_K + R_{G_2} R_{E_1}} v_{C_K}^o  + \frac{R_{E_1}}{R_K + R_{G_2} R_{E_1}} v_{C_G}^o + \frac{R_{E_2}}{R_K + R_{G_2} R_{E_1}} v_{C_B}^o
+  - \frac{R_K + R_{EQ}}{L_K} i_{L_K}^o - \frac{1}{L_K} v_{C_K}^o + \frac{R_{EQ}}{{R_{1,2}}L_K} v_{C,1}^o + \frac{R_{EQ}}{R_{2,2}L_K} v_{C,2}^o - \frac{R_{EQ}}{L_K} i_B^o= 0 \nle
+  v_{C,2}^o = \frac{R_{2,2}(R_K + R_{EQ})}{R_{EQ}} i_{L_K}^o + \frac{R_{2,2}}{R_{EQ}} v_{C_K}^o - \frac{R_{2,2}}{{R_{1,2}}} v_{C,1}^o + R_{2,2}i_B^o
 \end{gather}
 
 Substituindo, obtemos:
+\begin{multline*}
+  \delta \dot{i}_{L_K} = - \frac{R_K + R_{EQ}}{L_K} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
+  - \frac{1}{L_K} \left[v_{C_K}^o + \delta v_{C_K}(t)\right] \\
+  + \frac{R_{EQ}}{{R_{1,2}}L_K} \left[v_{C,1}^o + \delta v_{C,1}(t)\right]
+  + \frac{R_{EQ}}{R_{2,2}L_K} \left[v_{C,2}^o + \delta v_{C,2}(t)\right] - \frac{R_{EQ}}{L_K} \left[i_B^o + \delta i_B(t)\right] = 0
+\end{multline*}
 \begin{gather}
-  \dot{i}_{L_K} = - \frac{R_K + R_{G_2} R_{E_1}}{L_K} i_{L_K}(t) - \frac{1}{L_K} v_{C_K}(t)  + \frac{R_{E_1}}{L_K} v_{C_G}(t) + \frac{R_{E_2}}{L_K} v_{C_B}(t) \nle
-  \delta \dot{i}_{L_K} = - \frac{R_K + R_{G_2} R_{E_1}}{L_K} \left[i_{L_K}^o + \delta i_{L_K}(t) \right] - \frac{1}{L_K} \left[v_{C_K}^o + \delta v_{C_K}(t)\right]  + \frac{R_{E_1}}{L_K} \left[v_{C_G}^o + \delta v_{C_G}(t)\right] + \frac{R_{E_2}}{L_K} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \nle
-  \delta \dot{i}_{L_K} = \frac{R_{E_1}}{L_K} \delta v_{C_G}(t) - \frac{R_K+R_{G_2}R_{E_1}}{L_K} \delta i_{L_K}(t)
-  - \frac{1}{L_K} \delta v_{C_K}(t) + \frac{R_{E_2}}{L_K} \delta v_{C_B}(t)
+  \delta \dot{i}_{L_K} = - \frac{R_K + R_{EQ}}{L_K} \delta i_{L_K}(t)
+  - \frac{1}{L_K} \delta v_{C_K}(t)
+  + \frac{R_{EQ}}{{R_{1,2}}L_K} \delta v_{C,1}(t)
+  + \frac{R_{EQ}}{R_{2,2}L_K} \delta v_{C,2}(t)
+  - \frac{R_{EQ}}{L_K} \delta i_B(t)
 \end{gather}
 
-\textbf{\textit{Tensão $v_{C_G}$ transladada}} \vspace*{12pt}
+\textbf{\textit{Tensão $v_{C,1}$ transladada}} \vspace*{12pt}
 
-Para $\dot{v}_{C_G}$, têm-se:
+Para $\dot{v}_{C,1}$, têm-se:
 \begin{gather}
-  \frac{1}{C_G} i_{L_G}^o - \frac{1 - R_{E_1}}{C_G R_{G_2}} v_{C_G}^o - \frac{R_{E_1}}{C_G} i_{L_K}^o + \frac{R_{E_2}}{R_{G_2} C_G} v_{C_B}^o = 0 \nle
-  i_{L_G}^o = \frac{1 - R_{E_1}}{R_{G_2}} v_{C_G}^o + R_{E_1} i_{L_K}^o - \frac{R_{E_2}}{R_{G_2}} v_{C_B}^o
-\end{gather}
-
-Substituindo, obtemos:
-\begin{gather}
-  \dot{v}_{C_G} = \frac{1}{C_G} i_{L_G}(t) - \frac{1 - R_{E_1}}{C_G R_{G_2}} v_{C_G}(t) - \frac{R_{E_1}}{C_G} i_{L_K}(t) + \frac{R_{E_2}}{R_{G_2} C_G} v_{C_B}(t) \nle
-  \delta \dot{v}_{C_G} = \frac{1}{C_G} \left[i_{L_G}^o + \delta i_{L_G}(t)\right]
-  - \frac{1 - R_{E_1}}{C_G R_{G_2}} \left[v_{C_G}^o + \delta v_{C_G}(t) \right]
-  - \frac{R_{E_1}}{C_G} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_2}}{R_{G_2} C_G} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \nle
-  \delta \dot{v}_{C_G} = \frac{R_{E_1} - 1}{R_{G_2} C_G} \delta v_{C_G}(t)
-  - \frac{R_{E_1}}{C_G} \delta i_{L_K}(t)
-  + \frac{R_{E_2}}{R_{G_2} C_G} \delta v_{C_B}(t) + \frac{1}{C_G} \delta i_{L_G}(t)
-\end{gather}
-
-\textbf{\textit{Tensão $v_{C_B}$ transladada}} \vspace*{12pt}
-
-Para $\dot{v}_{C_B}$, têm-se:
-\begin{gather}
-  \frac{1}{C_B} \left[1 - d_B^o\right] i_{L_B}^o - \frac{1 - R_{E_2}}{R_{B_2}C_B} v_{C_B}^o - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} i_{L_K}^o + \frac{R_{E_1}}{R_{B_2} C_B} v_{C_G}^o = 0 \nle
-  i_{L_B}^o = \frac{1 - R_{E_2}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_G}^o
+  \frac{1}{C_1} i_{L,1}^o - \frac{1}{R_{1,2}C_1} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) v_{C,1}^o - \frac{R_{EQ}}{R_{1,2} C_1} i_{L_K}^o + \frac{1}{C_1 (R_{1,2} + R_{2,2})} v_{C,2}^o - \frac{R_{EQ}}{R_{1,2}C_1} i_B^o = 0 \nle
+  i_{L,1}^o = \frac{1}{R_{1,2}} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) v_{C,1}^o + \frac{R_{EQ}}{R_{1,2} } i_{L_K}^o - \frac{1}{ (R_{1,2} + R_{2,2})} v_{C,2}^o + \frac{R_{EQ}}{R_{1,2}} i_B^o
 \end{gather}
 
 Substituindo, obtemos:
+\begin{multline*}
+  \delta \dot v_{C,1} = \frac{1}{C_1} \left[i_{L,1}^o + \delta i_{L,1}(t)\right]
+  - \frac{1}{R_{1,2}C_1} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) \left[v_{C,1}^o + \delta v_{C,1}(t)\right] \\
+  - \frac{R_{EQ}}{R_{1,2} C_1} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
+  + \frac{1}{C_1 (R_{1,2} + R_{2,2})} \left[v_{C,2}^o + \delta v_{C,2}(t) \right]
+  - \frac{R_{EQ}}{R_{1,2} C_1} \left[i_B^o + \delta i_B(t)\right]
+\end{multline*}
+\begin{gather}
+  \delta \dot v_{C,1} = \frac{1}{C_1} \delta i_{L,1}(t)
+  - \frac{1}{R_{1,2}C_1} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) \delta v_{C,1}(t)
+  - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_{L_K}(t)
+  + \frac{1}{C_1 (R_{1,2} + R_{2,2})} \delta v_{C,2}(t)
+  - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_B(t)
+\end{gather}
+
+\textbf{\textit{Tensão $v_{C,2}$ transladada}} \vspace*{12pt}
+
+Para $\dot{v}_{C,2}$, têm-se:
 \begin{gather*}
-  \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B(t)\right] i_{L_B}(t) - \frac{1 - R_{E_2}}{R_{B_2}C_B} v_{C_B}(t) - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} i_{L_K}(t) + \frac{R_{E_1}}{R_{B_2} C_B} v_{C_G}(t)
+  \frac{1}{C_2} \left(1 - d_2^o\right) i_{L,2}^o - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}^o - \frac{R_{EQ}}{R_{2,2} C_2} i_{L_K}^o + \frac{1}{C_2(R_{1,2} + R_{2,2})} v_{C,1}^o - \frac{R_{EQ}}{R_{2,2}C_2} i_B^o= 0
 \end{gather*}
+\begin{gather}
+  i_{L,2}^o = \frac{1}{R_{2,2} \left(1 - d_2^o\right)} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}^o + \frac{R_{EQ}}{R_{2,2} \left(1 - d_2^o\right)} i_{L_K}^o - \frac{1}{\left(1 - d_2^o\right) (R_{1,2} + R_{2,2})} v_{C,1}^o + \frac{R_{EQ}}{R_{2,2}\left(1 - d_2^o\right)} i_B^o
+\end{gather}
+
+Substituindo, obtemos:
 \begin{multline*}
-  \delta \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B^o - \delta d_B(t)\right] \left[i_{L_B}^o + \delta i_{L_B}(t) \right]
-  - \frac{1 - R_{E_2}}{R_{B_2}C_B} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \\
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_1}}{R_{B_2} C_B} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
+  \delta \dot v_{C,2} = \frac{1}{C_2} \left[1 - d_2^o - \delta d_2(t)\right] \left[i_{L,2}^o + \delta i_{L,2}(t)\right]
+  - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) \left[v_{C,2}^o + \delta v_{C,2}(t)\right] \\
+  - \frac{R_{EQ}}{R_{2,2} C_2} \left[i_{L_K}^o + \delta i_{L_K}(t)\right] + \frac{1}{C_2(R_{1,2} + R_{2,2})} \left[v_{C,1}^o + \delta v_{C,1}(t)\right] - \frac{R_{EQ}}{R_{2,2} C_2} \left[i_B^o + \delta i_B(t)\right]
 \end{multline*}
 \begin{multline*}
-  \delta \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B^o\right] \left[i_{L_B}^o + \delta i_{L_B}(t) \right]
-  - \delta d_B(t) \left[i_{L_B}^o + \delta i_{L_B}(t) \right]
-  - \frac{1 - R_{E_2}}{R_{B_2}C_B} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \\
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_1}}{R_{B_2} C_B} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
+  \delta \dot v_{C,2} = \frac{1}{C_2} (1 - d_2^o) i_{L,2}^o + \frac{1}{C_2} (1 - d_2^o) \delta i_{L,2}(t) - \frac{1}{C_2} \delta d_2(t) i_{L,2}^o - \frac{1}{C_2} \delta d_2(t) \delta i_{L,2}(t)\\
+  - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) \left[v_{C,2}^o + \delta v_{C,2}(t)\right]
+  - \frac{R_{EQ}}{R_{2,2} C_2} \left[i_{L_K}^o + \delta i_{L_K}(t)\right] + \frac{1}{C_2(R_{1,2} + R_{2,2})} \left[v_{C,1}^o + \delta v_{C,1}(t)\right] \\
+  - \frac{R_{EQ}}{R_{2,2} C_2} \left[i_B^o + \delta i_B(t)\right]
 \end{multline*}
 \begin{multline*}
-  \delta \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B^o\right] i_{L_B}^o + \frac{1}{C_B} \left[1 - d_B^o\right] \delta i_{L_B}(t)
-  - \delta d_B(t) \left[i_{L_B}^o + \delta i_{L_B}(t) \right]
-  - \frac{1 - R_{E_2}}{R_{B_2}C_B} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \\
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_1}}{R_{B_2} C_B} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
+  \delta \dot v_{C,2} = \frac{1}{C_2} (1 - d_2^o) \delta i_{L,2}(t) - \frac{1}{C_2} \left[i_{L,2}^o + \delta i_{L,2}(t)\right] \delta d_2(t)
+  - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) \delta v_{C,2}(t)  \\
+  - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_{L_K}(t) + \frac{1}{C_2(R_{1,2} + R_{2,2})}  \delta v_{C,1}(t) - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_B(t)
 \end{multline*}
-\begin{multline*}
-  \delta \dot{v}_{C_B} = \frac{1}{C_B} \left[1 - d_B^o\right] \left[\frac{1 - R_{E_2}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_G}^o\right] \\
-  + \frac{1}{C_B} \left[1 - d_B^o\right] \delta i_{L_B}(t)
-  - \delta d_B(t) \left[i_{L_B}^o + \delta i_{L_B}(t) \right]
-  - \frac{1 - R_{E_2}}{R_{B_2}C_B} \left[v_{C_B}^o + \delta v_{C_B}(t)\right] \\
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_1}}{R_{B_2} C_B} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
-\end{multline*}
-\begin{multline*}
-  \delta \dot{v}_{C_B} = \frac{1 - R_{E_2}}{R_{B_2}C_B} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}C_B} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}C_B} v_{C_G}^o
-  + \frac{1}{C_B} \left[1 - d_B^o\right] \delta i_{L_B}(t)
-  - \delta d_B(t) \left[i_{L_B}^o + \delta i_{L_B}(t) \right] \\
-  - \frac{1 - R_{E_2}}{R_{B_2}C_B} \left[v_{C_B}^o + \delta v_{C_B}(t)\right]
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2} C_B} \left[i_{L_K}^o + \delta i_{L_K}(t)\right]
-  + \frac{R_{E_1}}{R_{B_2} C_B} \left[v_{C_G}^o + \delta v_{C_G}(t)\right]
-\end{multline*}
-\begin{multline}
-  \delta \dot{v}_{C_B} = - \frac{1 - R_{E_2}}{R_{B_2}C_B} \delta v_{C_B}(t)
-  - \frac{R_{G_2} R_{E_1}}{R_{B_2}C_B} \delta i_{L_K}(t)
-  + \frac{R_{E_1}}{R_{B_2}C_B} \delta v_{C_G}(t)
-  + \frac{1 - d_B^o}{C_B} \delta i_{L_B}(t)
-  - i_{L_B}^o \delta d_B(t) - \delta i_{L_B}(t) \delta d_B(t)
-\end{multline}
+
 
 \textbf{\textit{Tensão $v_{C_K}$ transladada}} \vspace*{12pt}
 
 Para $\dot{v}_{C_K}$, têm-se:
 \begin{gather*}
   \frac{1}{C_K} i_{L_K}^o - \frac{1}{R_{crl} C_K} v_{C_K}^o - \frac{1}{C_K} \frac{P_{cpl}^o}{v_{C_K}^o} = 0 \nle
-  i_{L_K}^o = \frac{1}{R_{crl}} v_{C_K}^o + \frac{P_{cpl}^o}{v_{C_K}^o} \nle
+  i_{L_K}^o = \frac{1}{R_{crl}} v_{C_K}^o + \frac{P_{cpl}^o}{v_{C_K}^o}
 \end{gather*}
 
 Substituindo, obtemos:
@@ -483,59 +438,68 @@ Substituindo, obtemos:
 
 A saída transladada é:
 \begin{gather}
-  \delta v_E(t) = - R_{G_2} R_{E_1} \delta i_{L_K}(t) + R_{E_1} \delta v_{C_G}(t) + R_{E_2} \delta v_{C_B}(t)
+  \delta v_E(t) = \frac{R_{EQ}}{R_{1,2}} \delta v_{C,1}(t) + \frac{R_{EQ}}{R_{2,2}} \delta v_{C,2}(t) - R_{EQ} \delta i_B(t) - R_{EQ} \delta i_{L_K}(t)
 \end{gather}
 
 
 \textbf{\textit{Modelo dinâmico transladado}} \vspace*{12pt}
 
-Os pontos de operação são:
+Têm-se,
+\begin{equation*}
+  i_{L,2}^o \left(1 - d_2^o\right) = \frac{1}{R_{2,2}} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}^o + \frac{R_{EQ}}{R_{2,2}} i_{L_K}^o - \frac{1} {R_{1,2} + R_{2,2}} v_{C,1}^o + \frac{R_{EQ}}{R_{2,2}} i_B^o
+\end{equation*}
+\begin{equation*}
+  i_{L,2}^o \left(\frac{R_{2,1}i_{L,2}^o}{v_{C,2}^o} - \frac{v_{\text{in},2}^o}{v_{C,2}^o}\right) = \frac{1}{R_{2,2}} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}^o + \frac{R_{EQ}}{R_{2,2}} i_{L_K}^o - \frac{1} {R_{1,2} + R_{2,2}} v_{C,1}^o + \frac{R_{EQ}}{R_{2,2}} i_B^o
+\end{equation*}
+\begin{equation*}
+  \frac{R_{2,1}}{v_{C,2}^o}({i_{L,2}^o})^2 - \frac{v_{\text{in},2}^o}{v_{C,2}^o}{i_{L,2}^o}
+  - \left\{\frac{1}{R_{2,2}} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) v_{C,2}^o + \frac{R_{EQ}}{R_{2,2}} i_{L_K}^o - \frac{1} {R_{1,2} + R_{2,2}} v_{C,1}^o + \frac{R_{EQ}}{R_{2,2}} i_B^o \right\} = 0
+\end{equation*}
 
-\begin{gather}
-  d_G^o = \frac{R_{G_1}}{v_G(t)} i_{L_G}^o + \frac{1}{v_G(t)} v_{C_G}^o \nle
-  d_B^o = -\frac{R_{B_1}}{v_B^o} i_{L_B}^o - \frac{1}{v_B^o} v_{C_B}^o + 1 \nle
-  i_{L_K}^o = - \frac{1}{R_K + R_{G_2} R_{E_1}} v_{C_K}^o  + \frac{R_{E_1}}{R_K + R_{G_2} R_{E_1}} v_{C_G}^o + \frac{R_{E_2}}{R_K + R_{G_2} R_{E_1}} v_{C_B}^o \nle
-  i_{L_G}^o = \frac{1 - R_{E_1}}{R_{G_2}} v_{C_G}^o + R_{E_1} i_{L_K}^o - \frac{R_{E_2}}{R_{G_2}} v_{C_B}^o \nle
-  i_{L_B}^o = \frac{1 - R_{E_2}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2} \left[1 - d_B^o\right]} v_{C_G}^o \nle
-  i_{L_K}^o = \frac{1}{R_{crl}} v_{C_K}^o + \frac{P_{cpl}^o}{v_{C_K}^o}
-\end{gather}
+E os demais pontos de operação são:
 
-Têm-se:
-\begin{gather}
-  d_B^o = -\frac{R_{B_1}}{v_B^o} i_{L_B}^o - \frac{1}{v_B^o} v_{C_B}^o + 1 \nle
-  d_B^o \left[1 - d_B^o\right]= -\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] + \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right]\nle
-  d_B^o - {d_B^o}^2 = -\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] + \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right]\nle
-  {d_B^o}^2 = \frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right] - \left[- \frac{1}{v_B^o} v_{C_B}^o + 1 \right] \left[1 - d_B^o\right] + d_B^o\nle
-  {d_B^o}^2 - \left\{- \frac{1}{v_B^o} v_{C_B}^o + 2 \right\} d_B^o - \left\{\frac{R_{B_1}}{v_B^o} \left[\frac{1 - R_{E_2}}{R_{B_2}} v_{C_B}^o + \frac{R_{G_2} R_{E_1}}{R_{B_2}} i_{L_K}^o - \frac{R_{E_1}}{R_{B_2}} v_{C_G}^o\right]\right\} = 0
-\end{gather}
+\begin{align}
+  d_1^o     & = \frac{R_{1,1}}{v_{\text{in}, 1}(t)} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}(t)} v_{C,1}^o, &
+  d_2^o     & = 1 + \frac{R_{2,1}i_{L,2}^o}{v_{C,2}^o} - \frac{v_{\text{in},2}^o}{v_{C,2}^o,}                        &
+  i_{L_K}^o & = \frac{1}{R_{crl}} v_{C_K}^o + \frac{P_{cpl}^o}{v_{C_K}^o},
+\end{align}
+\begin{align}
+  i_{L,1}^o & = \frac{1}{R_{1,2}} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) v_{C,1}^o + \frac{R_{EQ}}{R_{1,2} } i_{L_K}^o - \frac{1}{ (R_{1,2} + R_{2,2})} v_{C,2}^o + \frac{R_{EQ}}{R_{1,2}} i_B^o\\[12pt]
+            & v_{C,2}^o = \frac{R_{2,2}(R_K + R_{EQ})}{R_{EQ}} i_{L_K}^o + \frac{R_{2,2}}{R_{EQ}} v_{C_K}^o - \frac{R_{2,2}}{{R_{1,2}}} v_{C,1}^o + R_{2,2}i_B^o
+\end{align}
+
 
 O modelo dinâmico transladado é:
 
 \begin{gather}
   \begin{cases}
-    \delta \dot{i}_{L_G} = \ds - \frac{R_{G_1}}{L_G} \delta i_{L_G}(t) - \frac{1}{L_G} \delta v_{C_G}(t) + \frac{v_B(t)}{L} \delta d_G(t) \\[14pt]
-    \delta \dot{i}_{L_B} = \ds - \frac{v_B^o}{L_B} \delta d_B(t) - \frac{R_{B_1}}{L_B} \delta i_{L_B}(t)
-    - \frac{1}{L_B} \delta v_{C_B}(t) - \frac{1}{L_B} \delta d_B(t) \delta v_B(t)
-    + \frac{R_{B_1} i_{L_B}^o + v_{C_B}^o}{L_B v_B^o} \delta v_B(t)                                                                       \\[14pt]
-    \delta \dot{i}_{L_K} = \ds \frac{R_{E_1}}{L_K} \delta v_{C_G}(t) - \frac{R_K+R_{G_2}R_{E_1}}{L_K} \delta i_{L_K}(t)
-    - \frac{1}{L_K} \delta v_{C_K}(t) + \frac{R_{E_2}}{L_K} \delta v_{C_B}(t)                                                             \\[14pt]
-    \delta \dot{v}_{C_G} = \ds \frac{R_{E_1} - 1}{R_{G_2} C_G} \delta v_{C_G}(t)
-    - \frac{R_{E_1}}{C_G} \delta i_{L_K}(t)
-    + \frac{R_{E_2}}{R_{G_2} C_G} \delta v_{C_B}(t) + \frac{1}{C_G} \delta i_{L_G}(t)                                                     \\[14pt]
-    \delta \dot{v}_{C_B} = \ds - \frac{1 - R_{E_2}}{R_{B_2}C_B} \delta v_{C_B}(t)
-    - \frac{R_{G_2} R_{E_1}}{R_{B_2}C_B} \delta i_{L_K}(t)
-    + \frac{R_{E_1}}{R_{B_2}C_B} \delta v_{C_G}(t)
-    + \frac{1 - d_B^o}{C_B} \delta i_{L_B}(t)
-    - i_{L_B}^o \delta d_B(t) - \delta i_{L_B}(t) \delta d_B(t)                                                                           \\[14pt]
-    \delta \dot{v}_{C_K} = \ds \frac{1}{C_K} \delta i_{L_K}(t)
-    - \frac{1}{R_{crl} C_K} \delta v_{C_K}(t)
-    + \frac{P_{cpl}^o \delta v_{C_K}(t) - v_{C_K}^o \delta P_{cpl}(t)}{Cv_{C_K}^o\left[v_{C_K}^o + \delta v_{C_K}(t)\right]}              \\[14pt]
-  \end{cases}
+  \delta \dot{i}_{L,1} = \ds - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} \delta d_1(t) \\[12pt]
+  \delta \dot{i}_{L,2} = \ds \frac{R_{2,1}}{L_2} \delta i_{L,2}(t)
+  + \left[\frac{R_{2,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{\text{in},2}^o}{L_2 v_{C,2}^o}\right] \delta v_{C,2}(t) + \frac{1}{L_2} \left[v_{C,2}^o + \delta v_{C,2}(t)\right] \delta d_2(t) + \frac{1}{L_2} \delta v_{\text{in},2}(t) \\[12pt]
+  \delta \dot{i}_{L_K} = \ds - \frac{R_K + R_{EQ}}{L_K} \delta i_{L_K}(t)
+  - \frac{1}{L_K} \delta v_{C_K}(t)
+  + \frac{R_{EQ}}{{R_{1,2}}L_K} \delta v_{C,1}(t)
+  + \frac{R_{EQ}}{R_{2,2}L_K} \delta v_{C,2}(t)
+  - \frac{R_{EQ}}{L_K} \delta i_B(t) \\[12pt]
+  \delta \dot v_{C,1} = \ds \frac{1}{C_1} \delta i_{L,1}(t)
+  - \frac{1}{R_{1,2}C_1} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) \delta v_{C,1}(t)
+  - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_{L_K}(t)
+  + \frac{1}{C_1 (R_{1,2} + R_{2,2})} \delta v_{C,2}(t)
+  - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_B(t) \\[12pt]
+  \begin{aligned}
+    \delta \dot v_{C,2} = \ds \frac{1}{C_2} (1 - d_2^o) \delta i_{L,2}(t) - \frac{1}{C_2} \left[i_{L,2}^o + \delta i_{L,2}(t)\right] \delta d_2(t)
+    - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) \delta v_{C,2}(t)  
+    - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_{L_K}(t) \\+ \frac{1}{C_2(R_{1,2} + R_{2,2})}  \delta v_{C,1}(t) - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_B(t) \\[12pt]
+  \end{aligned} \\
+  \dot{v}_{C_K} = \ds \frac{1}{C_K} \delta i_{L_K}(t)
+  - \frac{1}{R_{crl} C_K} \delta v_{C_K}(t)
+  + \frac{P_{cpl}^o \delta v_{C_K}(t) - v_{C_K}^o \delta P_{cpl}(t)}{Cv_{C_K}^o\left[v_{C_K}^o + \delta v_{C_K}(t)\right]}  
+\end{cases}
 \end{gather}
 
 E a saída é:
 \begin{gather}
-  \delta v_E(t) = - R_{G_2} R_{E_1} \delta i_{L_K}(t) + R_{E_1} \delta v_{C_G}(t) + R_{E_2} \delta v_{C_B}(t)
+  \delta v_E(t) = - R_{1,2} R_{E_1} \delta i_{L_K}(t) + R_{E_1} \delta v_{C,1}(t) + R_{E_2} \delta v_{C,2}(t)
 \end{gather}
 
 \end{document}
