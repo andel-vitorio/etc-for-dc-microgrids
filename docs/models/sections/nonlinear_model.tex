@@ -254,29 +254,43 @@ Assim, o modelo centralizado é:
 
 Parcelando os estados e as entradas do sistema em termos fixos e em termos variantes no tempo, obtemos:
 
-\begin{align}
+\begin{align*}
   i_{L,1}(t) & = i_{L,1}^o + \delta i_{L,1}(t) & i_{L,2}(t) & = i_{L,2}^o + \delta i_{L,2}(t) & i_{L_K}(t) & = i_{L_K}^o + \delta i_{L_K}(t) \nle
   v_{C,1}(t) & = v_{C,1}^o + \delta v_{C,1}(t) & v_{C,2}(t) & = v_{C,2}^o + \delta v_{C,2}(t) & v_{C_K}(t) & = v_{C_K}^o + \delta v_{C_K}(t) \nle
   d_1(t)     & = d_1^o + \delta d_1(t)         & d_2(t)     & = d_2^o + \delta d_2(t)         & P_{cpl}(t) & = P_{cpl}^o + \delta P_{cpl}(t) \nle
-             &                                 & v_{\text{in},2}(t)     & = v_{\text{in},2}^o + \delta v_{\text{in},2}(t)         &            &
+\end{align*}
+\begin{align}
+  v_{\text{in},1}(t)     & = v_{\text{in},1}^o + \delta v_{\text{in},1}(t)         & v_{\text{in},2}(t)     & = v_{\text{in},2}^o + \delta v_{\text{in},2}(t)
 \end{align}
 
 \textbf{\textit{Corrente $i_{L,1}$ transladada}} \vspace*{12pt}
 
 Para $\dot{i}_{L,1}$, têm-se:
 \begin{gather}
-  - \frac{R_{1,1}}{L_1} i_{L,1}^o - \frac{1}{L_1} v_{C,1}^o + \frac{v_{\text{in}, 1}(t)}{L_1} d_1^o = 0 \Rightarrow
-  - R_{1,1} i_{L,1}^o - v_{C,1}^o + v_{\text{in}, 1}(t) d_1^o = 0 \nle
-  d_1^o = \frac{R_{1,1}}{v_{\text{in}, 1}(t)} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}(t)} v_{C,1}^o
+  - \frac{R_{1,1}}{L_1} i_{L,1}^o - \frac{1}{L_1} v_{C,1}^o + \frac{v_{\text{in}, 1}^o}{L_1} d_1^o = 0 \Rightarrow
+  - R_{1,1} i_{L,1}^o - v_{C,1}^o + v_{\text{in}, 1}^o d_1^o = 0 \nle
+  d_1^o = \frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o
 \end{gather}
 
 Substituindo, obtemos:
-\begin{gather}
-  \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t) \nle
+\begin{gather*}
+  \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} i_{L,1}(t) - \frac{1}{L_1} v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} d_1(t)
+\end{gather*}
+\begin{multline*}
   \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \left[i_{L,1}^o + \delta i_{L,1}(t)\right]
-  - \frac{1}{L_1} \left[v_{C,1}^o + \delta v_{C,1}(t)\right]
-  + \frac{v_{\text{in}, 1}(t)}{L_1} \left[\frac{R_{1,1}}{v_{\text{in}, 1}(t)} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}(t)} v_{C,1}^o + \delta d_1(t)\right] \nle
-  \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} \delta d_1(t)
+  - \frac{1}{L_1} \left[v_{C,1}^o + \delta v_{C,1}(t)\right] \\
+  + \frac{v_{\text{in}, 1}^o}{L_1} \left[\frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o + \delta d_1(t)\right] 
+  + \frac{ \delta v_{\text{in}, 1}(t)}{L_1} \left[\frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o + \delta d_1(t)\right]
+\end{multline*}
+\begin{gather*}
+  \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) + \frac{v_{\text{in}, 1}^o}{L_1} \delta d_1(t) + 
+  \frac{1}{L_1} \left(\frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o\right) \delta v_{\text{in}, 1}(t) 
+  + \frac{1}{L_1} \delta v_{\text{in}, 1}(t) \delta d_1(t)
+\end{gather*}
+\begin{gather}
+  \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) 
+  + \frac{v_{\text{in}, 1}^o + \delta v_{\text{in}, 1}(t)}{L_1} \delta d_1(t) + 
+  \frac{1}{L_1} \left(\frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o\right) \delta v_{\text{in}, 1}(t) 
 \end{gather}
 
 \textbf{\textit{Corrente $i_{L,2}$ transladada}} \vspace*{12pt}
@@ -428,25 +442,27 @@ O modelo dinâmico transladado é:
 
 \begin{gather}
   \begin{cases}
-  \delta \dot{i}_{L,1} = \ds - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) + \frac{v_{\text{in}, 1}(t)}{L_1} \delta d_1(t) \\[12pt]
-  \delta \dot{i}_{L,2} = \ds \frac{R_{2,1}}{L_2} \delta i_{L,2}(t)
+    \delta \dot{i}_{L,1} = - \frac{R_{1,1}}{L_1} \delta i_{L,1}(t) - \frac{1}{L_1} \delta v_{C,1}(t) 
+    + \frac{v_{\text{in}, 1}^o + \delta v_{\text{in}, 1}(t)}{L_1} \delta d_1(t) + 
+    \frac{1}{L_1} \left(\frac{R_{1,1}}{v_{\text{in}, 1}^o} i_{L,1}^o + \frac{1}{v_{\text{in}, 1}^o} v_{C,1}^o\right) \delta v_{\text{in}, 1}(t) \\[12pt]
+  \delta \dot{i}_{L,2} = \frac{R_{2,1}}{L_2} \delta i_{L,2}(t)
   + \left[\frac{R_{2,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{\text{in},2}^o}{L_2 v_{C,2}^o}\right] \delta v_{C,2}(t) + \frac{1}{L_2} \left[v_{C,2}^o + \delta v_{C,2}(t)\right] \delta d_2(t) + \frac{1}{L_2} \delta v_{\text{in},2}(t) \\[12pt]
-  \delta \dot{i}_{L_K} = \ds - \frac{R_K + R_{EQ}}{L_K} \delta i_{L_K}(t)
+  \delta \dot{i}_{L_K} = - \frac{R_K + R_{EQ}}{L_K} \delta i_{L_K}(t)
   - \frac{1}{L_K} \delta v_{C_K}(t)
   + \frac{R_{EQ}}{{R_{1,2}}L_K} \delta v_{C,1}(t)
   + \frac{R_{EQ}}{R_{2,2}L_K} \delta v_{C,2}(t)
   - \frac{R_{EQ}}{L_K} \delta i_B(t) \\[12pt]
-  \delta \dot v_{C,1} = \ds \frac{1}{C_1} \delta i_{L,1}(t)
+  \delta \dot v_{C,1} = \frac{1}{C_1} \delta i_{L,1}(t)
   - \frac{1}{R_{1,2}C_1} \left(1 - \frac{R_{EQ}}{{R_{1,2}}}\right) \delta v_{C,1}(t)
   - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_{L_K}(t)
   + \frac{1}{C_1 (R_{1,2} + R_{2,2})} \delta v_{C,2}(t)
   - \frac{R_{EQ}}{R_{1,2} C_1} \delta i_B(t) \\[12pt]
   \begin{aligned}
-    \delta \dot v_{C,2} = \ds \frac{1}{C_2} (1 - d_2^o) \delta i_{L,2}(t) - \frac{1}{C_2} \left[i_{L,2}^o + \delta i_{L,2}(t)\right] \delta d_2(t)
+    \delta \dot v_{C,2} = \frac{1}{C_2} (1 - d_2^o) \delta i_{L,2}(t) - \frac{1}{C_2} \left[i_{L,2}^o + \delta i_{L,2}(t)\right] \delta d_2(t)
     - \frac{1}{R_{2,2}C_2} \left(1 - \frac{R_{EQ}}{R_{2,2}}\right) \delta v_{C,2}(t)  
     - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_{L_K}(t) \\+ \frac{1}{C_2(R_{1,2} + R_{2,2})}  \delta v_{C,1}(t) - \frac{R_{EQ}}{R_{2,2} C_2} \delta i_B(t) \\[12pt]
   \end{aligned} \\
-  \dot{v}_{C_K} = \ds \frac{1}{C_K} \delta i_{L_K}(t)
+  \dot{v}_{C_K} = \frac{1}{C_K} \delta i_{L_K}(t)
   - \frac{1}{R_{crl} C_K} \delta v_{C_K}(t)
   + \frac{P_{cpl}^o \delta v_{C_K}(t) - v_{C_K}^o \delta P_{cpl}(t)}{Cv_{C_K}^o\left[v_{C_K}^o + \delta v_{C_K}(t)\right]}  
 \end{cases}
