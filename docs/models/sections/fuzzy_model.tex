@@ -6,26 +6,26 @@ O modelo dinâmico transladado pode ser descrito como:
     \dot{x}(t) = A \cdot x(t) + B \cdot u(t) + F \cdot \omega(t)
 \end{gather*}
 
-ou,
+com,
 
 \begin{gather}
-  \begin{bmatrix}
-    \delta \dot{i}_{L,1} \\[12pt] \delta \dot{i}_{L,2} \\[12pt] \delta \dot{i}_{L_K} \\[12pt]
-    \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
-  \end{bmatrix} =
-  \begin{bmatrix}
+  % \dot{x}(t) = \begin{bmatrix}
+  %   \delta \dot{i}_{L,1} \\[12pt] \delta \dot{i}_{L,2} \\[12pt] \delta \dot{i}_{L_K} \\[12pt]
+  %   \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
+  % \end{bmatrix} =
+  A = \begin{bmatrix}
     \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
     0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
     0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
     \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
     0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
     0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
-  \end{bmatrix}
-  \begin{bmatrix}
+  \end{bmatrix}, \quad
+  x(t) = \begin{bmatrix}
     \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
     \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
-  \end{bmatrix} \notag \\[12pt] +
-  \begin{bmatrix}
+  \end{bmatrix}, \notag \\[12pt]
+  B = \begin{bmatrix}
     \ds \frac{v_{in,1}^o + \delta v_{in,1}(t)}{L_1} & 0                 & 0                                                        \\[12pt]
     0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + \delta v_{C,2}(t) \right]     & 0                              
                                     \\[12pt]
@@ -34,11 +34,11 @@ ou,
     0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + \delta i_{L,2}(t) \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
     0                      & 0                 & 0 
                                     \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
+  \end{bmatrix}, \quad
+  u(t) = \begin{bmatrix}
     \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
-  \end{bmatrix} +
-  \begin{bmatrix}
+  \end{bmatrix}, \notag \\[12pt]
+  F = \begin{bmatrix}
       f_{11} & 0                   & 0
                             \\[12pt]
       0 & \ds \frac{1}{L_2}   & 0 
@@ -51,10 +51,10 @@ ou,
                             \\[12pt]
       0 & 0                   & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
                             \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
+  \end{bmatrix}, \quad
+  \omega(t) = \begin{bmatrix}
     \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
-  \end{bmatrix}
+  \end{bmatrix}.
 \end{gather}
 
 Em que:
@@ -199,70 +199,67 @@ Termo não linear $z_4(t)$:
 
 O modelo fuzzy da microrrede é representado como: 
 
-\begin{gather}
-    \begin{bmatrix}
-    \delta \dot{i}_{L,1} \\[12pt] \delta \dot{i}_{L,2} \\[12pt] \delta \dot{i}_{L_K} \\[12pt]
-    \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
-  \end{bmatrix} =
-  \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
-  \notag \\[12pt] \times
-  \{
-    \begin{bmatrix}
-    \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
-    0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
-    0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
-    \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
-    0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
-    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
-  \end{bmatrix}
-  \begin{bmatrix}
-    \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
-    \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
-  \end{bmatrix} \notag \\[12pt] +
-    \begin{bmatrix}
-    \ds \frac{v_{in,1}^o + b_j}{L_1} & 0                 & 0                                                        \\[12pt]
-    0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + c_k \right]     & 0                              
-                                    \\[12pt]
-    0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
-    0                      & 0                 & - \ds \frac{R_{EQ}}{R_{1,2}C_1}                    \\[12pt]
-    0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + d_l \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
-    0                      & 0                 & 0 
-                                    \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
-    \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
-  \end{bmatrix} +
-  \begin{bmatrix}
-      f_{11} & 0                   & 0
-                            \\[12pt]
-      0 & \ds \frac{1}{L_2}   & 0 
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & - \ds q_i \cdot v_{C_K}^o
-                            \\[12pt]
-  \end{bmatrix}
-  \begin{bmatrix}
-    \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
-  \end{bmatrix}
-  \}
-\end{gather}
+% \begin{gather}
+%     \dot{x}(t) =
+%   \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
+%   \notag \\[12pt] \times
+%   \{
+%     \begin{bmatrix}
+%     \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
+%     0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
+%     0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
+%     \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
+%     0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
+%     0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
+%   \end{bmatrix}
+%   \begin{bmatrix}
+%     \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
+%     \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
+%   \end{bmatrix} \notag \\[12pt] +
+%     \begin{bmatrix}
+%     \ds \frac{v_{in,1}^o + b_j}{L_1} & 0                 & 0                                                        \\[12pt]
+%     0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + c_k \right]     & 0                              
+%                                     \\[12pt]
+%     0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
+%     0                      & 0                 & - \ds \frac{R_{EQ}}{R_{1,2}C_1}                    \\[12pt]
+%     0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + d_l \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
+%     0                      & 0                 & 0 
+%                                     \\[12pt]
+%   \end{bmatrix}
+%   \begin{bmatrix}
+%     \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
+%   \end{bmatrix} +
+%   \begin{bmatrix}
+%       f_{11} & 0                   & 0
+%                             \\[12pt]
+%       0 & \ds \frac{1}{L_2}   & 0 
+%                             \\[12pt]
+%       0 & 0                   & 0
+%                             \\[12pt]
+%       0 & 0                   & 0
+%                             \\[12pt]
+%       0 & 0                   & 0
+%                             \\[12pt]
+%       0 & 0                   & - \ds q_i \cdot v_{C_K}^o
+%                             \\[12pt]
+%   \end{bmatrix}
+%   \begin{bmatrix}
+%     \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
+%   \end{bmatrix}
+%   \}
+% \end{gather}
 
-Em que:
+% Em que:
 
-\begin{equation*}
-    a_{66} = \ds q_i \cdot P_{cpl}^o - \frac{1}{R_{crl} C_K},
-\end{equation*} 
+% \begin{equation*}
+%     a_{66} = \ds q_i \cdot P_{cpl}^o - \frac{1}{R_{crl} C_K},
+% \end{equation*} 
 
-\begin{equation*}
-    f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
-\end{equation*}
+% \begin{equation*}
+%     f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
+% \end{equation*}
 
-ou, 
+% ou, 
 
 \begin{gather}
     \dot{x}(t) =
@@ -314,5 +311,5 @@ Considerando o erros de transmissão:
 O sistema em malha fechada é
 
 \begin{gather}
-    \dot{x}(t) = \sum_{\mathbf{i}} \sum_{\mathbf{j}} h_\mathbf{i}(x(t)) h_\mathbf{j}(\hat{x}) \left\{ (A_{\mathbf{i}} + B_{\mathbf{i}}K_{\mathbf{j}}x + (E_{\mathbf{i}} + B_{\mathbf{i}}L_{\mathbf{j}})\omega + B_{\mathbf{i}}K_{\mathbf{j}}e_x + B_{\mathbf{j}}L_{\mathbf{j}}e_\omega \right\}.
+    \dot{x}(t) = \sum_{\mathbf{i}} \sum_{\mathbf{j}} h_\mathbf{i}(x(t)) h_\mathbf{j}(\hat{x}) \left\{ (A_{\mathbf{i}} + B_{\mathbf{i}}K_{\mathbf{j}})x + (F_{\mathbf{i}} + B_{\mathbf{i}}L_{\mathbf{j}})\omega + B_{\mathbf{i}}K_{\mathbf{j}}e_x + B_{\mathbf{j}}L_{\mathbf{j}}e_\omega \right\}.
 \end{gather}
