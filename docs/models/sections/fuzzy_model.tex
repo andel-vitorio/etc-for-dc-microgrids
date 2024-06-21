@@ -136,6 +136,7 @@ Usando as equações~\ref{eq:z1_definition_by_membership_functions} e~\ref{eq:z1
 
 As funções de pertinência dos demais termos podem ser obtidas de forma análoga.
 
+\vspace{0.5cm}
 Termo não linear $z_2(t)$:
 
 \begin{gather*}
@@ -291,3 +292,27 @@ Em que,
     h_\mathbf{i}(z(t))=E_i\left(z_1(t)\right) M_j\left(z_2(t)\right) N_k\left(z_3(t)\right) S_l\left(z_4(t)\right), \\
     \boldsymbol{A}_\mathbf{i}=\boldsymbol{A}_{i j k l}, \quad \boldsymbol{B}_\mathbf{i}=\boldsymbol{B}_{i j k l}, \quad \boldsymbol{F}_\mathbf{i}=\boldsymbol{B}_{i j k l} .
 \end{gather*}
+
+\subsection*{Sistema em malha fechada}
+Lei de controle não linear aplicada:
+
+\begin{gather}
+    u(t)=K(\hat{x}(t)) \hat{x}(t) + L(\hat{x}(t)) \hat{\omega}(t)=\sum_{\mathbf{j} 
+    % \in \mathbb{B}^p
+    } \mathrm{h}_{\mathbf{j}}(\hat{x}(t)) \left( K_{\mathbf{j}} \hat{x}(t)  + L_{\mathbf{j}} \hat{\omega}(t) \right)
+\end{gather}
+
+Em que $\hat{x}(t)$ são os dados disponíveis sobre os estados para o controlador.
+
+\vspace{0.5cm}
+Considerando o erros de transmissão:
+
+\begin{gather}
+    e_x(t)=\hat{x}(t)-x(t), \quad e_\omega(t)=\hat{\omega}(t)-\omega(t)
+\end{gather}
+
+O sistema em malha fechada é
+
+\begin{gather}
+    \dot{x}(t) = \sum_{\mathbf{i}} \sum_{\mathbf{j}} h_\mathbf{i}(x(t)) h_\mathbf{j}(\hat{x}) \left\{ (A_{\mathbf{i}} + B_{\mathbf{i}}K_{\mathbf{j}}x + (E_{\mathbf{i}} + B_{\mathbf{i}}L_{\mathbf{j}})\omega + B_{\mathbf{i}}K_{\mathbf{j}}e_x + B_{\mathbf{j}}L_{\mathbf{j}}e_\omega \right\}.
+\end{gather}
