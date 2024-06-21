@@ -10,8 +10,8 @@ ou,
 
 \begin{gather}
   \begin{bmatrix}
-    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
-    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
+    \delta \dot{i}_{L,1} \\[12pt] \delta \dot{i}_{L,2} \\[12pt] \delta \dot{i}_{L_K} \\[12pt]
+    \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
   \end{bmatrix} =
   \begin{bmatrix}
     \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
@@ -26,7 +26,7 @@ ou,
     \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
   \end{bmatrix} \notag \\[12pt] +
   \begin{bmatrix}
-    \ds \frac{v_{in,1}(t)}{L_1} & 0                 & 0                                                        \\[12pt]
+    \ds \frac{v_{in,1}^o + \delta v_{in,1}(t)}{L_1} & 0                 & 0                                                        \\[12pt]
     0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + \delta v_{C,2}(t) \right]     & 0                              
                                     \\[12pt]
     0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
@@ -36,41 +36,45 @@ ou,
                                     \\[12pt]
   \end{bmatrix}
   \begin{bmatrix}
-    \delta d_1(t) \\ \delta d_2(t) \\ \delta i_{B}(t)
+    \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
   \end{bmatrix} +
   \begin{bmatrix}
-      0                   & 0
+      f_{11} & 0                   & 0
                             \\[12pt]
-      \ds \frac{1}{L_2}   & 0 
+      0 & \ds \frac{1}{L_2}   & 0 
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
+      0 & 0                   & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
                             \\[12pt]
   \end{bmatrix}
   \begin{bmatrix}
-    \delta v_{in,2}(t) \\ \delta P_{cpl}(t)
+    \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
   \end{bmatrix}
 \end{gather}
 
 Em que:
 
-\begin{equation}
-    a_{66} = \ds \frac{P_{cpl}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} - \frac{1}{R_{crl} C_K}
-\end{equation} 
+\begin{equation*}
+    a_{66} = \ds \frac{P_{cpl}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} - \frac{1}{R_{crl} C_K},
+\end{equation*} 
+
+\begin{equation*}
+    f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
+\end{equation*}
 
 
-As não linearidades são definidas como:
+As variáveis premissas:
 
 \begin{gather*}
     z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
 \end{gather*}
 \begin{gather*}
-    z_2(t) = v_{in,1}(t)
+    z_2(t) = \delta v_{in,1}(t)
 \end{gather*}
 \begin{gather*}
     z_3(t) = \delta v_{C,2}(t)
@@ -135,11 +139,11 @@ As funções de pertinência dos demais termos podem ser obtidas de forma análo
 Termo não linear $z_2(t)$:
 
 \begin{gather*}
-    \max_{ v_{in,1}(t)} z_2(t) = \max v_{in,1}(t) = b_1
+    \max_{ v_{in,1}(t)} z_2(t) = \max \delta v_{in,1}(t) = b_1
 \end{gather*}
 
 \begin{gather}
-    \min_{ v_{in,1}(t)} z_2(t) = \min v_{in,1}(t) = b_2
+    \min_{ v_{in,1}(t)} z_2(t) = \min \delta v_{in,1}(t) = b_2
 \end{gather}
 
 \begin{gather*}
@@ -196,8 +200,8 @@ O modelo fuzzy da microrrede é representado como:
 
 \begin{gather}
     \begin{bmatrix}
-    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
-    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
+    \delta \dot{i}_{L,1} \\[12pt] \delta \dot{i}_{L,2} \\[12pt] \delta \dot{i}_{L_K} \\[12pt]
+    \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
   \end{bmatrix} =
   \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
   \notag \\[12pt] \times
@@ -215,7 +219,7 @@ O modelo fuzzy da microrrede é representado como:
     \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
   \end{bmatrix} \notag \\[12pt] +
     \begin{bmatrix}
-    \ds \frac{b_j}{L_1} & 0                 & 0                                                        \\[12pt]
+    \ds \frac{v_{in,1}^o + b_j}{L_1} & 0                 & 0                                                        \\[12pt]
     0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + c_k \right]     & 0                              
                                     \\[12pt]
     0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
@@ -225,24 +229,24 @@ O modelo fuzzy da microrrede é representado como:
                                     \\[12pt]
   \end{bmatrix}
   \begin{bmatrix}
-    \delta d_1(t) \\ \delta d_2(t) \\ \delta i_{B}(t)
+    \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
   \end{bmatrix} +
   \begin{bmatrix}
-      0                   & 0
+      f_{11} & 0                   & 0
                             \\[12pt]
-      \ds \frac{1}{L_2}   & 0 
+      0 & \ds \frac{1}{L_2}   & 0 
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & 0
+      0 & 0                   & 0
                             \\[12pt]
-      0                   & - \ds q_i \cdot v_{C_K}^o
+      0 & 0                   & - \ds q_i \cdot v_{C_K}^o
                             \\[12pt]
   \end{bmatrix}
   \begin{bmatrix}
-    \delta v_{in,2}(t) \\ \delta P_{cpl}(t)
+    \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
   \end{bmatrix}
   \}
 \end{gather}
@@ -250,19 +254,40 @@ O modelo fuzzy da microrrede é representado como:
 Em que:
 
 \begin{equation*}
-    a_{66} = \ds q_i \cdot P_{cpl}^o - \frac{1}{R_{crl} C_K}
+    a_{66} = \ds q_i \cdot P_{cpl}^o - \frac{1}{R_{crl} C_K},
 \end{equation*} 
+
+\begin{equation*}
+    f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
+\end{equation*}
 
 ou, 
 
 \begin{gather}
-    \begin{bmatrix}
-    \dot{i}_{L,1} \\[12pt] \dot{i}_{L,2} \\[12pt] \dot{i}_{L_K} \\[12pt]
-    \dot{v}_{C,1} \\[12pt] \dot{v}_{C,2} \\[12pt] \dot{v}_{C_K}
-  \end{bmatrix} =
+    \dot{x}(t) =
   \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
   \notag \\[12pt] \times
   \left\{
     A_{ijkl}x(t) + B_{ijkl}u(t) + F_{ijkl}\omega(t)
   \right\}
 \end{gather}
+
+Os somatórios podem ser reduzidos em um único somatório:
+
+\begin{gather}
+    \dot{x}(t) =
+  \sum\limits_{\mathbf{i}=1}^{16} h_{\mathbf{i}}(z(t))\left\{ A_{\mathbf{i}}x(t) + B_{\mathbf{i}}u(t) + F_{\mathbf{i}}\omega(t)\right\}
+\end{gather}
+
+Em que,
+
+% \begin{gather*}
+%     w_1 = \sum\limits_{i=1}^{2}E_i(z_1(t)), \quad w_2 = \sum\limits_{j=1}^{2}M_j(z_2(t)), \quad w_3 = \sum\limits_{k=1}^{2}N_k(z_3(t)), \quad w_4 = \sum\limits_{l=1}^{2}S_l(z_4(t)),
+% \end{gather*}
+
+\begin{gather*}
+    \mathbf{i}=2^0l+2^1(k-1)+2^2(j-1)+2^3(i-1), \\
+    % h_{\mathbf{i}}(z(t)) = \prod_{\mathbf{j}=1}^{4}w_\mathbf{j}
+    h_\mathbf{i}(z(t))=E_i\left(z_1(t)\right) M_j\left(z_2(t)\right) N_k\left(z_3(t)\right) S_l\left(z_4(t)\right), \\
+    \boldsymbol{A}_\mathbf{i}=\boldsymbol{A}_{i j k l}, \quad \boldsymbol{B}_\mathbf{i}=\boldsymbol{B}_{i j k l}, \quad \boldsymbol{F}_\mathbf{i}=\boldsymbol{B}_{i j k l} .
+\end{gather*}
