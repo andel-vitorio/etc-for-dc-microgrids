@@ -27,24 +27,26 @@ LMI de restrição:
 onde,
 \begin{equation}
   \Upsilon_{ij} =  \begin{bmatrix}
-    \text{He}(A_iX + B_i\tilde K_j)  + I & B_i \tilde K_j & E_iX   & X             \\
-    \star                               & -\tilde \Xi    & 0      & 0             \\
-    \star                               & \star          & -\mu I & 0             \\
-    \star                               & \star          & \star  & - \tilde \Psi
+    \text{He}(A_iX + B_i\tilde K_j) & B_i \tilde K_j & E_i    & X             & X  \\
+    \star                           & -\tilde \Xi    & 0      & 0             & 0  \\
+    \star                           & \star          & -\mu I & 0             & 0  \\
+    \star                           & \star          & \star  & - \tilde \Psi & 0  \\
+    \star                           & \star          & \star  & \star         & -I \\
   \end{bmatrix}
 \end{equation}
 
 Prova:
 \begin{equation}
   \begin{bmatrix}
-    \text{He}(AX + B(x)\tilde K(x))  + I & B(x) \tilde K(x) & E(x)X  & X             \\
-    \star                               & -\tilde \Xi      & 0      & 0             \\
-    \star                               & \star            & -\mu I & 0             \\
-    \star                               & \star            & \star  & - \tilde \Psi
+    \text{He}(AX + B(x)\tilde K(x)) & B(x) \tilde K(x) & E(x)   & X             & X  \\
+    \star                           & -\tilde \Xi      & 0      & 0             & 0  \\
+    \star                           & \star            & -\mu I & 0             & 0  \\
+    \star                           & \star            & \star  & - \tilde \Psi & 0  \\
+    \star                           & \star            & \star  & \star         & -I \\
   \end{bmatrix} < 0
 \end{equation}
 
-Multiplicando por $\text{diag}(X^{-1}, X^{-1}, X^{-1}, I)$
+Multiplicando por $\text{diag}(X^{-1}, X^{-1}, I, I, I)$
 
 \begin{equation}
   K_j = \tilde K_j X^{-1}, \quad \Xi = X^{-1} \tilde \Xi X^{-1}, \quad \Psi = \tilde \Psi^{-1}, \quad P = X^{-1}
@@ -52,10 +54,11 @@ Multiplicando por $\text{diag}(X^{-1}, X^{-1}, X^{-1}, I)$
 
 \begin{equation}
   \begin{bmatrix}
-    \text{He}(PA(x) + PB(x)K(x))  + I & PB(x)K(x) & P E(x) & I             \\
-    \star                            & -\Xi      & 0      & 0             \\
-    \star                            & \star     & -\mu I & 0             \\
-    \star                            & \star     & \star  & - \tilde \Psi
+    \text{He}(PA(x) + PB(x)K(x)) & PB(x)K(x) & P E(x) & I             & I   \\
+    \star                        & -\Xi      & 0      & 0             & 0   \\
+    \star                        & \star     & -\mu I & 0             & 0   \\
+    \star                        & \star     & \star  & - \tilde \Psi & 0   \\
+    \star                        & \star     & \star  & \star         & - I
   \end{bmatrix} < 0
 \end{equation}
 
@@ -65,8 +68,8 @@ Por Schur:
 \begin{equation}
   \begin{bmatrix}
     \text{He}(PA(x) + PB(x)K(x)) + \Psi  + I & PB(x)K(x) & P E(x) \\
-    \star                                   & -\Xi      & 0      \\
-    \star                                   & \star     & -\mu I \\
+    \star                                    & -\Xi      & 0      \\
+    \star                                    & \star     & -\mu I \\
   \end{bmatrix} < 0
 \end{equation}
 
