@@ -1,0 +1,287 @@
+\section{LMI de Estabilidade}
+
+Sistema em malha fechada:
+\begin{equation}
+  \dot x = \left[A(x) + B(x) K(x(t)) \right] x(t) + B(x) K(x(t)) e(t) + B(x) K(e(t)) \left[e(t) + x(t)\right] + E(x) w(t)
+\end{equation}
+
+ETM dinâmico:
+\begin{equation}
+  t_0 = 0, t_{k+1} = \inf \{t > t_k : \eta(t) + \theta \Gamma(x(t), e_x(t)) < 0 \}, \, \forall k \in \mathbb{N}.
+\end{equation}
+
+Função de ativação:
+\begin{equation}
+  \Gamma(x, e) = x^T(t) \Psi x(t) - e^T \Xi e - \zeta(x, e)
+\end{equation}
+com,
+\begin{equation}
+  \zeta(x, e) = 2 x^T P\left[B(x) \left(K(x+e) - x\right)(x+e)\right]
+\end{equation}
+
+LMI de restrição:
+\begin{equation}
+  \sum\limits_{i, j \in B^{p}} \Upsilon_{ij} < 0
+\end{equation}
+onde,
+\begin{equation}
+  \Upsilon_{ij} =  \begin{bmatrix}
+    \text{He}(A_iX + B_i\tilde K_j) & B_i \tilde K_j & X E_i^{\top} & X             & X  \\
+    \star                           & -\tilde \Xi    & 0            & 0             & 0  \\
+    \star                           & \star          & -\mu I       & 0             & 0  \\
+    \star                           & \star          & \star        & - \tilde \Psi & 0  \\
+    \star                           & \star          & \star        & \star         & -I \\
+  \end{bmatrix}
+\end{equation}
+
+Prova:
+\begin{equation}
+  \begin{bmatrix}
+    \text{He}(AX + B(x)\tilde K(x)) & B(x) \tilde K(x) & X E(x)^{\top} & X             & X  \\
+    \star                           & -\tilde \Xi      & 0             & 0             & 0  \\
+    \star                           & \star            & -\mu X        & 0             & 0  \\
+    \star                           & \star            & \star         & - \tilde \Psi & 0  \\
+    \star                           & \star            & \star         & \star         & -I \\
+  \end{bmatrix} < 0
+\end{equation}
+
+Multiplicando por $\text{diag}(X^{-1}, X^{-1},  X^{-1}, I, I)$
+
+\begin{equation}
+  K_j = \tilde K_j X^{-1}, \quad \Xi = X^{-1} \tilde \Xi X^{-1}, \quad \Psi = \tilde \Psi^{-1}, \quad P = X^{-1}
+\end{equation}
+
+\begin{equation}
+  y = C(x) x(t) + D(x) u(t)
+\end{equation}
+
+\begin{equation}
+  y = C(x) x(t) + D(x) K(\hat x) \hat{x}
+\end{equation}
+
+\begin{equation}
+  y = C(x) x(t) + D(x) K(x) e + D(x) \left(K(x+e) - x\right)(x+e)
+\end{equation}
+
+\begin{equation}
+  \zeta_y =  D(x) \left(K(x+e) - x\right)(x+e)
+\end{equation}
+
+\begin{equation}
+  \zeta_2 =  He (\zeta_y^{\top}Cx  + \zeta_y^{\top}(D(x) K(x) e)) + \zeta_y^{\top} \zeta_y
+\end{equation}
+
+\begin{equation}
+  y = C(x) x(t) + D(x) K(x) e + \zeta_y
+\end{equation}
+
+\begin{gather}
+  y^{\top} y = x^{\top} C^{\top} C x + x^{\top} C^{\top} D K e + (D K e)^{\top} C x + (D(x) K(x) e)^{\top} D(x) K(x) e
+\end{gather}
+
+
+\begin{equation}
+  \begin{bmatrix}
+    \text{He}(PA(x) + PB(x)K(x)) & PB(x)K(x) & P E(x) & I             & I                  \\
+    \star                        & -\Xi      & 0      & 0             & 0                  \\
+    \star                        & \star     & -\mu I & 0             & 0                  \\
+    \star                        & \star     & \star  & - \tilde \Psi & 0                  \\
+    \star                        & \star     & \star  & \star         & - \tilde{C}(x)
+  \end{bmatrix} < 0
+\end{equation}
+
+onde, $\tilde C(x) = (C^{\top}(x) C(x))^{-1}$.
+
+Por Schur:
+
+
+\begin{equation}
+  \begin{bmatrix}
+    \text{He}(PA(x) + PB(x)K(x)) + \Psi  + C^{\top}(x) C(x) & PB(x)K(x) +  C^{\top}(x) D(x) K(x)       & P E(x) \\
+    \star                                                   & -\Xi + K^{\top}(x) D^{\top}(x) D(x) K(x) & 0      \\
+    \star                                                   & \star                                    & -\mu I \\
+  \end{bmatrix} < 0
+\end{equation}
+
+Pré-multiplicando a matriz anterior por
+
+\begin{equation}
+  \begin{bmatrix}
+    x^T & e^T & w^T
+  \end{bmatrix}
+\end{equation}
+
+têm-se:
+
+wT -> 1,nw
+P -> nx,nx
+E -> nx,nw
+
+
+Cx
+x -> 6,1
+C -> ny,6
+
+\begin{equation}
+  \begin{bmatrix}
+    A_1 & A_2 & A_3 \\
+  \end{bmatrix} < 0
+\end{equation}
+onde,
+\begin{equation}
+  A_1 = x^T \left[\text{He}(PA(x) + PB(x)K(x)) + \Psi\right]  + x^T C(x) + e^TPB(x)K(x) + w^TPE(x)
+\end{equation}
+\begin{equation}
+  A_2 = x^TPB(x)K(x) - e^T\Xi
+\end{equation}
+\begin{equation}
+  A_3 = x^TPE(x) - \mu w^T
+\end{equation}
+
+Pós-multiplicando por:
+
+\begin{equation}
+  \begin{bmatrix}
+    x & e & w
+  \end{bmatrix}^T
+\end{equation}
+
+têm-se:
+\begin{multline}
+  x^T \left[\text{He}(PA(x) + PB(x)K(x)) + \Psi\right] x + e^TPB(x)K(x) x + w^TPE(x) x \\
+  +  x^TPB(x)K(x)e - e^T\Xi e +  x^TPE(x) w + Cx - \mu w^Tw < 0
+\end{multline}
+
+\begin{multline}
+  x^T \left[\text{He}(PA(x) + PB(x)K(x))\right] x + e^TPB(x)K(x) x + w^TPE(x) x \\
+  +  x^TPB(x)K(x)e - e^T\Xi e +  x^T \Xi x + x^TPE(x) w + y^Ty - \mu w^Tw < 0
+\end{multline}
+
+
+\begin{multline}
+  2  x^T P \left[A(x) + B(x)K(x)\right] x + 2 x^TPB(x)K(x)e + 2 x^TPE(x)w \\
+  - e^T\Xi e +  x^T(t) \Psi x(t) + y^Ty - \mu w^Tw < 0
+\end{multline}
+
+
+\begin{equation}
+  2  x^T P \left\{\left[A(x) + B(x)K(x)\right]x + B(x)K(x)e + E(x)w\right\}
+  - e^T\Xi e +  x^T(t) \Psi x(t) + y^Ty - \mu w^Tw < 0
+\end{equation}
+
+
+
+\begin{equation}
+  2x^T(t)P\left\{\left[A(x) + B(x) K(x(t)) \right] x(t)  + B(x) K(x(t)) e(t) + E(x) w(t)\right\} + y^T(t) \Psi y(t) - e^T \Xi e < 0
+\end{equation}
+
+
+
+\begin{equation}
+  \dot x^T(t)Px(t) + x^T(t)P\dot x(T) + \dot \eta(t) + y^T(t)y(t) - \mu w^T(t)w(t) < 0
+\end{equation}
+
+\section{Lidar com o Comportamento Zeno}
+
+\section{Tentativa 1}
+
+Assumindo que $w(t)$ satisfaz:
+\begin{equation}
+  w^{\sf{T}}(t) w(t) \leq \varrho
+\end{equation}
+$\varrho$ é uma constante dada.
+
+Para $t \in [t_k, t_{k+1}]$, têm-se:
+\begin{equation}
+  \|\dot e(t)\| = \|\dot x(t)\| = \|\left[A(x) + B(x) K(x(t)) \right] x(t) + B(x) K(x(t)) e(t) + B(x) K(e(t)) \left[e(t) + x(t)\right] + E(x) w(t)\|
+\end{equation}
+
+
+\begin{equation}
+  \|\dot e(t)\| = \|\left[A(x) + B(x) K(x(t)) \right] \left[\hat x(t) - e(t)\right] + B(x) K(x(t)) e(t) + B(x) K(e(t)) \left[e(t) + x(t)\right] + E(x) w(t)\|
+\end{equation}
+
+\begin{equation}
+  \|\dot e(t)\| \leq \|A(x)\| \|e(t)\| + \|A(x) + B(x) K(x(t))\| \|\hat x(t)\| + \|E(x)\| \|w(t)\| + \|B(x) K(e(t))\|\|e(t) + x(t)\|
+\end{equation}
+
+\begin{equation}
+  \|\dot e(t)\| \leq c_1 \|e(t)\| + c_2
+\end{equation}
+onde,
+\begin{equation}
+  c_1 = \max \{|\lambda(A_i)|\}
+\end{equation}
+\begin{equation}
+  c_2 = \max \{|\lambda(A_i + B_i K_j)|\} \|\hat x(t)\| + \max\{\lambda(B(x) K(e(t)))\} \|\hat x(t)\| + \max\{|\lambda(D_i)|\} \sqrt{\varrho}
+\end{equation}
+
+Seja a variável auxiliar:
+\begin{equation}
+  \|\dot \upsilon(t)\| = c_1 \|\upsilon(t)\| + c_2
+\end{equation}
+
+Pode-se deduzir que $\upsilon(t) \geq e(t)$ pelo lema da comparação. Além disso, um pode 'alcançar' qur para $t \in [t_k, t_{k+1})$.
+
+(i) Se $c_1 \neq 0$,
+\begin{equation}
+  \|\upsilon(t)\| = \frac{c_2}{c_1} \left(e^{c_1(t - t_k)} - 1\right)
+\end{equation}
+
+(ii) Se $c_1 = 0$,
+\begin{equation}
+  \|\upsilon\| = c_2(t - t_k)
+\end{equation}
+
+Dado $\varsigma = \min \{1, \lambda_{\min}(P)\}$, têm-se:
+\begin{equation}
+  \varsigma \left(\eta(t) + \|x(t)\|^2\right) \leq x^{\sf T}(t) P x(t) + \eta(t) \leq W(x, \eta) \leq c
+\end{equation}
+
+\section{Tentativa 2}
+
+Quando evento é acionado, têm-se:
+\begin{gather}
+  \eta(t) + \theta \Gamma(x(t), e(t)) < 0 \\[8pt]
+  \Gamma(x(t), e(t)) < - \frac{\eta(t)}{\theta} \\[8pt]
+  \Gamma(x(t), e(t)) < - \frac{\eta(t)}{\theta} \\
+  x^T(t) \Psi x(t) - e^T(t) \Xi e(t) - \zeta(x(t), e(t)) < 0 \\[8pt]
+  e^T(t) \Xi e(t)  >  x^T(t) \Psi x(t) - \zeta(x(t), e(t))
+\end{gather}
+\begin{gather}
+  \frac{e^T(t) \Xi e(t)}{x^T(t) \Psi x(t)}  >  1 - \frac{\zeta(x(t), e(t))}{x^T(t) \Psi x(t)} \\[8pt]
+  {\cal G}(x(t), e(t)) >  1 - {\cal V}(x(t), e(t))
+\end{gather}
+com,
+\begin{equation}
+  \zeta(x, e) = 2 x^T P\left[B(x) \left(K(x+e) - x\right)(x+e)\right]
+\end{equation}
+
+Como ${\cal G}(x(t), e(t)) > 0$, então ${\cal V}(x(t), e(t)) < 1$, enquanto nenhum evento é acionado.
+
+\begin{equation}
+  \|\dot x(t)\| \leq L(\|x(t)\| + \|e(t)\| + \|w(t)\|) \\[8pt]
+\end{equation}
+\begin{equation}
+  \frac{\|\dot x(t)\|}{\|x(t)\|} \leq L\left(1 + \frac{\|e(t)\|}{\|x(t)\|} + \frac{\|w(t)\|}{\|x(t)\|}\right)
+\end{equation}
+
+
+\begin{equation}
+  \frac{\sf d}{{\sf d}t} \left(\frac{\|e(t)\|}{\|x(t)\|}\right) \leq L \left(1 + \frac{\|e(t)\|}{\|x(t)\|}\right) \left(1 + \frac{\|e(t)\|}{\|x(t)\|} + \frac{\|w(t)\|}{\|x(t)\|}\right)
+\end{equation}
+
+Como $\|x(t)\|^2 < \mu \|w(t)\|^2$, então:
+
+\begin{equation}
+  \frac{\sf d}{{\sf d}t} \left(\frac{\|e(t)\|}{\|x(t)\|}\right) \leq L \left\{\left(1 + \frac{\|e(t)\|}{\|x(t)\|}\right)^2 + \frac{\|w(t)\|}{\|x(t)\|} \right\}
+\end{equation}
+
+\begin{equation}
+  \frac{\sf d}{{\sf d}t} \left(\frac{\|e(t)\|}{\|x(t)\|}\right)
+  \leq L \left\{\left(1 + \frac{\|e(t)\|}{\|x(t)\|}\right)^2 + \frac{\sqrt{\varrho}}{\|x(t)\|} \right\}
+\end{equation}
+
+\begin{equation}
+  \dot \varphi \leq L \left\{\left(1 + \varphi\right)^2 + \frac{\sqrt{\varrho}}{\|x(t)\|} \right\}
+\end{equation}

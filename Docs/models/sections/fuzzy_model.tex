@@ -3,7 +3,7 @@
 O modelo dinâmico transladado pode ser descrito como:
 
 \begin{gather*}
-    \dot{x}(t) = A(x) \cdot x(t) + B(x) \cdot u(t) + F(x) \cdot \omega(t)
+  \dot{x}(t) = A(x) \cdot x(t) + B(x) \cdot u(t) + F(x) \cdot \omega(t)
 \end{gather*}
 
 com,
@@ -14,43 +14,43 @@ com,
   %   \delta \dot{v}_{C,1} \\[12pt] \delta \dot{v}_{C,2} \\[12pt] \delta \dot{v}_{C_K}
   % \end{bmatrix} =
   A = \begin{bmatrix}
-    \ds - \frac{R_{1,1}}{L_1} & 0                         & 0                                         & \ds - \frac{1}{L_1}                  & 0                                    & 0                           \\[12pt]
-    0                         & \ds - \frac{R_{2,1}}{L_2} & 0                                         & 0                                    & \ds - \left[ \frac{R_{1,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right]                  & 0                           \\[12pt]
-    0                         & 0                         & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}              & \ds \frac{R_{EQ}}{R_{2,2} L_K}              & - \ds \frac{1}{L_K}         \\[12pt]
-    \ds \frac{1}{C_1}         & 0                         & \ds - \frac{R_{EQ}}{R_{1,2} C_1}                 & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}       & 0                           \\[12pt]
-    0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right)         & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}      & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & 0                           \\[12pt]
-    0                         & 0                         & \ds \frac{1}{C_K}                         & 0                                    & 0                                    & a_{66}
+    \ds - \frac{R_{1,1}}{L_1} & 0                                          & 0                                & \ds - \frac{1}{L_1}                                                  & 0                                                                                             & 0                   \\[12pt]
+    0                         & \ds - \frac{R_{2,1}}{L_2}                  & 0                                & 0                                                                    & \ds \left[ \frac{R_{2,1} i_{L,2}^o}{L_2 v_{C,2}^o} - \frac{v_{in,2}^o}{L_2 v_{C,2}^o} \right] & 0                   \\[12pt]
+    0                         & 0                                          & - \ds \frac{R_K + R_{EQ}}{L_K}   & \ds \frac{R_{EQ}}{R_{1,2} L_K}                                       & \ds \frac{R_{EQ}}{R_{2,2} L_K}                                                                & - \ds \frac{1}{L_K} \\[12pt]
+    \ds \frac{1}{C_1}         & 0                                          & \ds - \frac{R_{EQ}}{R_{1,2} C_1} & \ds - \frac{1}{R_{1,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{1,2}} \right] & \ds \frac{1}{C_1 \left(R_{1,2} + R_{2,2}\right)}                                              & 0                   \\[12pt]
+    0                         & \ds \frac{1}{C_2} \left( 1 - d_2^o \right) & \ds - \frac{R_{EQ}}{R_{1,2} C_2} & \ds \frac{1}{C_2 \left(R_{1,2} + R_{2,2}\right)}                     & \ds - \frac{1}{R_{2,2}C_1} \left[ 1 - \frac{R_{EQ}}{R_{2,2}} \right]                          & 0                   \\[12pt]
+    0                         & 0                                          & \ds \frac{1}{C_K}                & 0                                                                    & 0                                                                                             & a_{66}
   \end{bmatrix}, \quad
   x(t) = \begin{bmatrix}
     \delta i_{L,1}(t) \\[12pt] \delta i_{L,2}(t) \\[12pt] \delta i_{L_K}(t) \\[12pt]
     \delta v_{C,1}(t) \\[12pt] \delta v_{C,2}(t) \\[12pt] \delta v_{C_K}(t)
   \end{bmatrix}, \notag \\[12pt]
   B = \begin{bmatrix}
-    \ds \frac{v_{in,1}^o + \delta v_{in,1}(t)}{L_1} & 0                 & 0                                                        \\[12pt]
-    0                      & \ds \frac{1}{L_2} \left[ v_{C,2}^o + \delta v_{C,2}(t) \right]     & 0                              
-                                    \\[12pt]
-    0                      & 0                 & - \ds \frac{R_{EQ}}{L_K}                                     \\[12pt]
-    0                      & 0                 & - \ds \frac{R_{EQ}}{R_{1,2}C_1}                    \\[12pt]
-    0                      & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + \delta i_{L,2}(t) \right]                 & - \ds \frac{R_{EQ}}{R_{2,2}C_2}                                      \\[12pt]
-    0                      & 0                 & 0 
-                                    \\[12pt]
+    \ds \frac{v_{in,1}}{L_1} & 0                                                                & 0                               \\[12pt]
+    0                        & \ds \frac{1}{L_2} \left[ v_{C,2}^o + \delta v_{C,2}(t) \right]   & 0
+    \\[12pt]
+    0                        & 0                                                                & - \ds \frac{R_{EQ}}{L_K}        \\[12pt]
+    0                        & 0                                                                & - \ds \frac{R_{EQ}}{R_{1,2}C_1} \\[12pt]
+    0                        & - \ds \frac{1}{C_2} \left[ i_{L,2}^o + \delta i_{L,2}(t) \right] & - \ds \frac{R_{EQ}}{R_{2,2}C_2} \\[12pt]
+    0                        & 0                                                                & 0
+    \\[12pt]
   \end{bmatrix}, \quad
   u(t) = \begin{bmatrix}
     \delta d_1(t) \\[12pt] \delta d_2(t) \\[12pt] \delta i_{B}(t)
   \end{bmatrix}, \notag \\[12pt]
   F = \begin{bmatrix}
-      f_{11} & 0                   & 0
-                            \\[12pt]
-      0 & \ds \frac{1}{L_2}   & 0 
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & 0
-                            \\[12pt]
-      0 & 0                   & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
-                            \\[12pt]
+     & 0
+    \\[12pt]
+     & 0
+    \\[12pt]
+     & 0
+    \\[12pt]
+     & 0
+    \\[12pt]
+     & 0
+    \\[12pt]
+     & - \ds \frac{v_{C_K}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
+    \\[12pt]
   \end{bmatrix}, \quad
   \omega(t) = \begin{bmatrix}
     \delta v_{in,1}(t) \\[12pt] \delta v_{in,2}(t) \\[12pt] \delta P_{cpl}(t)
@@ -60,78 +60,78 @@ com,
 Em que:
 
 \begin{equation*}
-    a_{66} = \ds \frac{P_{cpl}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} - \frac{1}{R_{crl} C_K},
-\end{equation*} 
+  a_{66} = \ds \frac{P_{cpl}^o}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} - \frac{1}{R_{crl} C_K},
+\end{equation*}
 
 \begin{equation*}
-    f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
+  f_{11} = \frac{1}{L_1} \left( \frac{R_{1,1}}{v_{in,1}^o}i_{L,1}^o + \frac{1}{v_{in,1}^o}v_{C,1}^o \right).
 \end{equation*}
 
 
 As variáveis premissas:
 
 \begin{gather*}
-    z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
+  z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]}
 \end{gather*}
 \begin{gather*}
-    z_2(t) = \delta v_{in,1}(t)
+  z_2(t) = \delta v_{in,1}(t)
 \end{gather*}
 \begin{gather*}
-    z_3(t) = \delta v_{C,2}(t)
+  z_3(t) = \delta v_{C,2}(t)
 \end{gather*}
 \begin{gather}
-    z_4(t) = \delta i_{L,2}(t)
+  z_4(t) = \delta i_{L,2}(t)
 \end{gather}
 
 \subsection*{Definição das funções de pertinência}
 
 Termo não linear $z_1(t)$:
 \begin{gather*}
-    \max_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_1 \quad ; \quad \min \delta v_{C_K}(t)
+  \max_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_1 \quad ; \quad \min \delta v_{C_K}(t)
 \end{gather*}
 
 \begin{gather}
-    \min_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_2 \quad ; \quad \max \delta v_{C_K}(t)
+  \min_{\delta v_{C_K}(t)} z_1(t) = \frac{1}{Cv_{C_K}^o \left[ v_{C_K}^o + \delta v_{C_K}(t) \right]} = q_2 \quad ; \quad \max \delta v_{C_K}(t)
 \end{gather}
 
 $z_1(t)$ pode ser definido:
 
 \begin{gather*}
-    z_1(t) = \sum\limits_{i=1}^{2} E_i(z_1(t))q_i
+  z_1(t) = \sum\limits_{i=1}^{2} E_i(z_1(t))q_i
 \end{gather*}
 
 \begin{gather}\label{eq:z1_definition_by_membership_functions}
-    E_1(z_1(t))q_1 + E_2(z_1(t))q_2 = z_1(t)
+  E_1(z_1(t))q_1 + E_2(z_1(t))q_2 = z_1(t)
 \end{gather}
 
 O somatório das funções de pertinência devem ser iguais a 1, então:
 
 \begin{gather}\label{eq:z1_membership_functions_sum}
-    E_1(z_1(t)) + E_2(z_1(t)) = 1
+  E_1(z_1(t)) + E_2(z_1(t)) = 1
 \end{gather}
 
 Usando as equações~\ref{eq:z1_definition_by_membership_functions} e~\ref{eq:z1_membership_functions_sum}:
 
 \begin{gather*}
-    E_1(z_1(t))q_1 = z_1(t) - E_2(z_1(t))q_2
+  E_1(z_1(t))q_1 = z_1(t) - E_2(z_1(t))q_2
 \end{gather*}
 \begin{gather*}
-    E_1(z_1(t)) = \frac{z_1(t) - E_2(z_1(t))q_2}{q_1}
+  E_1(z_1(t)) = \frac{z_1(t) - E_2(z_1(t))q_2}{q_1}
 \end{gather*}
 \begin{gather*}
-    E_2(z_1(t)) + \frac{z_1(t) - E_2(z_1(t))q_2}{q_1} = 1
+  E_2(z_1(t)) + \frac{z_1(t) - E_2(z_1(t))q_2}{q_1} = 1
 \end{gather*}
 \begin{gather*}
-    E_2(z_1(t))\left(q_1 - q_2 \right) = q_1 - z_1(t)
+  E_2(z_1(t))\left(q_1 - q_2 \right) = q_1 - z_1(t)
 \end{gather*}
 \begin{gather}
-    E_2(z_1(t)) = \frac{q_1 - z_1(t)}{q_1 - q_2}
+  E_2(z_1(t)) = \frac{q_1 - z_1(t)}{q_1 - q_2}
 \end{gather}
 \begin{gather*}
-    E_1(z_1(t)) = 1 - E_2(z_1(t))
+  E_1(z_1(t)) = 1 - E_2(z_1(t))
 \end{gather*}
 \begin{gather}
-    E_1(z_1(t)) = \frac{z_1(t) - q_2}{q_1 - q_2}
+  E_1(z_1(t)) = \frac{z_1(t) - q_2}{q_1 - q_2}
 \end{gather}
 
 As funções de pertinência dos demais termos podem ser obtidas de forma análoga.
@@ -140,64 +140,64 @@ As funções de pertinência dos demais termos podem ser obtidas de forma análo
 Termo não linear $z_2(t)$:
 
 \begin{gather*}
-    \max_{ v_{in,1}(t)} z_2(t) = \max \delta v_{in,1}(t) = b_1
+  \max_{ v_{in,1}(t)} z_2(t) = \max \delta v_{in,1}(t) = b_1
 \end{gather*}
 
 \begin{gather}
-    \min_{ v_{in,1}(t)} z_2(t) = \min \delta v_{in,1}(t) = b_2
+  \min_{ v_{in,1}(t)} z_2(t) = \min \delta v_{in,1}(t) = b_2
 \end{gather}
 
 \begin{gather*}
-    z_2(t) = \sum\limits_{j=1}^{2} M_j(z_2(t))b_i
+  z_2(t) = \sum\limits_{j=1}^{2} M_j(z_2(t))b_i
 \end{gather*}
 \begin{gather}
-    M_1(z_2(t)) = \frac{z_2(t) - b_2}{b_1 - b_2}
+  M_1(z_2(t)) = \frac{z_2(t) - b_2}{b_1 - b_2}
 \end{gather}
 \begin{gather}
-    M_2(z_2(t)) = \frac{b_1 - z_2(t)}{b_1 - b_2}
+  M_2(z_2(t)) = \frac{b_1 - z_2(t)}{b_1 - b_2}
 \end{gather}
 
 Termo não linear $z_3(t)$:
 
 \begin{gather*}
-    \max_{\delta v_{C,2}(t)} z_3(t) = \max \delta v_{C,2}(t) = c_1
+  \max_{\delta v_{C,2}(t)} z_3(t) = \max \delta v_{C,2}(t) = c_1
 \end{gather*}
 
 \begin{gather}
-    \min_{\delta v_{C,2}(t)} z_3(t) = \min \delta v_{C,2}(t) = c_2
+  \min_{\delta v_{C,2}(t)} z_3(t) = \min \delta v_{C,2}(t) = c_2
 \end{gather}
 
 \begin{gather*}
-    z_3(t) = \sum\limits_{k=1}^{2} N_k(z_3(t))c_i
+  z_3(t) = \sum\limits_{k=1}^{2} N_k(z_3(t))c_i
 \end{gather*}
 \begin{gather}
-    N_1(z_3(t)) = \frac{z_3(t) - c_2}{c_1 - c_2}
+  N_1(z_3(t)) = \frac{z_3(t) - c_2}{c_1 - c_2}
 \end{gather}
 \begin{gather}
-    N_2(z_3(t)) = \frac{c_1 - z_3(t)}{c_1 - c_2}
+  N_2(z_3(t)) = \frac{c_1 - z_3(t)}{c_1 - c_2}
 \end{gather}
 
 Termo não linear $z_4(t)$:
 
 \begin{gather*}
-    \max_{\delta i_{L,2}(t)} z_4(t) = \max \delta i_{L,2}(t) = d_1
+  \max_{\delta i_{L,2}(t)} z_4(t) = \max \delta i_{L,2}(t) = d_1
 \end{gather*}
 
 \begin{gather}
-    \min_{\delta i_{L,2}(t)} z_4(t) = \min \delta i_{L,2}(t) = d_2
+  \min_{\delta i_{L,2}(t)} z_4(t) = \min \delta i_{L,2}(t) = d_2
 \end{gather}
 
 \begin{gather*}
-    z_4(t) = \sum\limits_{l=1}^{2} S_l(z_4(t))d_i
+  z_4(t) = \sum\limits_{l=1}^{2} S_l(z_4(t))d_i
 \end{gather*}
 \begin{gather}
-    S_1(z_4(t)) = \frac{z_4(t) - d_2}{d_1 - d_2}
+  S_1(z_4(t)) = \frac{z_4(t) - d_2}{d_1 - d_2}
 \end{gather}
 \begin{gather}
-    S_2(z_4(t)) = \frac{d_1 - z_4`(t)}{d_1 - d_2}
+  S_2(z_4(t)) = \frac{d_1 - z_4`(t)}{d_1 - d_2}
 \end{gather}
 
-O modelo fuzzy da microrrede é representado como: 
+O modelo fuzzy da microrrede é representado como:
 
 % \begin{gather}
 %     \dot{x}(t) =
@@ -262,18 +262,18 @@ O modelo fuzzy da microrrede é representado como:
 % ou, 
 
 \begin{gather}
-    \dot{x}(t) =
+  \dot{x}(t) =
   \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} \sum\limits_{k=1}^{2} \sum\limits_{l=1}^{2} E_i(z_1(t))M_j(z_2(t))N_k(z_3(t))S_l(z_4(t))
   \notag \\[12pt] \times
   \left\{
-    A_{ijkl}x(t) + B_{ijkl}u(t) + F_{ijkl}\omega(t)
+  A_{ijkl}x(t) + B_{ijkl}u(t) + F_{ijkl}\omega(t)
   \right\}
 \end{gather}
 
 Os somatórios podem ser reduzidos em um único somatório:
 
 \begin{gather}
-    \dot{x}(t) =
+  \dot{x}(t) =
   \sum\limits_{\mathbf{i}=1}^{16} h_{\mathbf{i}}(z(t))\left\{ A_{\mathbf{i}}x(t) + B_{\mathbf{i}}u(t) + F_{\mathbf{i}}\omega(t)\right\}
 \end{gather}
 
@@ -284,19 +284,19 @@ Em que,
 % \end{gather*}
 
 \begin{gather*}
-    \mathbf{i}=2^0l+2^1(k-1)+2^2(j-1)+2^3(i-1), \\
-    % h_{\mathbf{i}}(z(t)) = \prod_{\mathbf{j}=1}^{4}w_\mathbf{j}
-    h_\mathbf{i}(z(t))=E_i\left(z_1(t)\right) M_j\left(z_2(t)\right) N_k\left(z_3(t)\right) S_l\left(z_4(t)\right), \\
-    \boldsymbol{A}_\mathbf{i}=\boldsymbol{A}_{i j k l}, \quad \boldsymbol{B}_\mathbf{i}=\boldsymbol{B}_{i j k l}, \quad \boldsymbol{F}_\mathbf{i}=\boldsymbol{B}_{i j k l} .
+  \mathbf{i}=2^0l+2^1(k-1)+2^2(j-1)+2^3(i-1), \\
+  % h_{\mathbf{i}}(z(t)) = \prod_{\mathbf{j}=1}^{4}w_\mathbf{j}
+  h_\mathbf{i}(z(t))=E_i\left(z_1(t)\right) M_j\left(z_2(t)\right) N_k\left(z_3(t)\right) S_l\left(z_4(t)\right), \\
+  \boldsymbol{A}_\mathbf{i}=\boldsymbol{A}_{i j k l}, \quad \boldsymbol{B}_\mathbf{i}=\boldsymbol{B}_{i j k l}, \quad \boldsymbol{F}_\mathbf{i}=\boldsymbol{B}_{i j k l} .
 \end{gather*}
 
 \subsection*{Sistema em malha fechada}
 Lei de controle não linear aplicada:
 
 \begin{gather}
-    u(t)=K(\hat{x}(t)) \hat{x}(t) + L(\hat{x}(t)) \hat{\omega}(t)=\sum_{\mathbf{j} 
+  u(t)=K(\hat{x}(t)) \hat{x}(t) + L(\hat{x}(t)) \hat{\omega}(t)=\sum_{\mathbf{j}
     % \in \mathbb{B}^p
-    } \mathrm{h}_{\mathbf{j}}(\hat{x}(t)) \left( K_{\mathbf{j}} \hat{x}(t)  + L_{\mathbf{j}} \hat{\omega}(t) \right)
+  } \mathrm{h}_{\mathbf{j}}(\hat{x}(t)) \left( K_{\mathbf{j}} \hat{x}(t)  + L_{\mathbf{j}} \hat{\omega}(t) \right)
 \end{gather}
 
 Em que $\hat{x}(t)$ são os dados disponíveis sobre os estados para o controlador.
@@ -305,11 +305,11 @@ Em que $\hat{x}(t)$ são os dados disponíveis sobre os estados para o controlad
 Considerando o erros de transmissão:
 
 \begin{gather}
-    e_x(t)=\hat{x}(t)-x(t), \quad e_\omega(t)=\hat{\omega}(t)-\omega(t)
+  e_x(t)=\hat{x}(t)-x(t), \quad e_\omega(t)=\hat{\omega}(t)-\omega(t)
 \end{gather}
 
 O sistema em malha fechada é
 
 \begin{gather}
-    \dot{x}(t) = \sum_{\mathbf{i}} \sum_{\mathbf{j}} h_\mathbf{i}(x(t)) h_\mathbf{j}(\hat{x}) \left\{ (A_{\mathbf{i}} + B_{\mathbf{i}}K_{\mathbf{j}})x + (F_{\mathbf{i}} + B_{\mathbf{i}}L_{\mathbf{j}})\omega + B_{\mathbf{i}}K_{\mathbf{j}}e_x + B_{\mathbf{j}}L_{\mathbf{j}}e_\omega \right\}.
+  \dot{x}(t) = \sum_{\mathbf{i}} \sum_{\mathbf{j}} h_\mathbf{i}(x(t)) h_\mathbf{j}(\hat{x}) \left\{ (A_{\mathbf{i}} + B_{\mathbf{i}}K_{\mathbf{j}})x + (F_{\mathbf{i}} + B_{\mathbf{i}}L_{\mathbf{j}})\omega + B_{\mathbf{i}}K_{\mathbf{j}}e_x + B_{\mathbf{j}}L_{\mathbf{j}}e_\omega \right\}.
 \end{gather}
